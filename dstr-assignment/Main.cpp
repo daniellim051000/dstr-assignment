@@ -1,5 +1,4 @@
 #include "Customer.h"
-#include "Transaction.h"
 
 int main() {
 	int choice;
@@ -13,10 +12,10 @@ int main() {
 		case 1:
 			showSelectionCustomer(choice);
 			break;
-		case 2:
+		/*case 2:
 			showSelectionTransaction(choice);
 			break;
-		/*case 3:
+		case 3:
 			showSelectionProduct();
 				break;
 		case 4:
