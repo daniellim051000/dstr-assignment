@@ -121,7 +121,6 @@ void updateCustomer() {
 			cout << "3 Edit Email" << endl;
 			cout << "4 to exit\n" << endl;
 			
-
 			int updateChoice;
 			cin >> updateChoice;
 
@@ -157,8 +156,6 @@ void updateCustomer() {
 			default:
 				cout << "Invalid selection.\n" << endl;
 			}
-			
-			
 		}
 		else {
 			current = current->next;
@@ -170,7 +167,31 @@ void updateCustomer() {
 }
 
 void searchCustomer() {
-	
+	int searchCustId;
+	cout << "Enter search customer ID: ";
+	cin >> searchCustId;
+	int Id;
+	string Name, PhoneNo, Email;
+	ifstream file("Customer.txt");
+
+	if (file.is_open()) {
+		cout << " _______________________________________________________________________________________________________________" << endl;
+		cout << " |Customer ID \t\tName \t\t\tPhone Number \t\t\tEmail\t\t\t\t|" << endl;
+		//if file not end of the file
+		while (!file.eof()) {
+			// loop each element to the declared variables
+			while (file >> Id >> Name >> PhoneNo >> Email) {
+				if (Id == searchCustId) {
+					cout << " |" << Id << "\t\t\t" << Name << "\t\t\t" << PhoneNo << "\t\t\t" << Email << " \t\t|" << endl;
+				}
+			}
+		}
+		cout << " |______________________________________________________________________________________________________________|" << endl;
+		file.close();
+	}
+	else {
+		cout << "Unable to open file!" << endl;
+	}
 }
 
 void viewCustomer() {

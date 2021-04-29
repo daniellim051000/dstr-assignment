@@ -23,7 +23,6 @@ int main() {
 			showSelectionCustomer(choice);
 			break;
 		case 2:
-			//showSelectionTransaction(choice);
 			cout << "order havent comeplete" << endl;
 			break;
 		case 3:
