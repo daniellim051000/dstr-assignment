@@ -1,4 +1,5 @@
 #include "Customer.h"
+#include "Inventory.h"
 
 int main() {
 	int choice;
