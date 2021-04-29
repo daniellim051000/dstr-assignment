@@ -194,7 +194,7 @@ void searchCustomer() {
 	}
 }
 
-void viewCustomer() {
+void viewCustomerDetail() {
 	int choice{};
 	string line;
 	int id;
@@ -218,10 +218,6 @@ void viewCustomer() {
 	}
 }
 
-void viewCustomerDetail() {
-
-}
-
 void showSelectionCustomer(int selected) {
 	if (selected == 1) {
 		cout << "*** Customer Management ***" << endl;
@@ -229,15 +225,14 @@ void showSelectionCustomer(int selected) {
 		cout << "1 Add Customer Details" << endl;
 		cout << "2 Update Customer Details" << endl;
 		cout << "3 Search Customer" << endl;
-		cout << "4 View Customer" << endl;
-		cout << "5 View Customer Details" << endl;
-		cout << "6 to exit\n" << endl;
+		cout << "4 View Customer Details" << endl;
+		cout << "5 to exit\n" << endl;
 
 		int choice{};
 		showSelectionCustomer(choice);
 		cin >> choice;
 
-		while(choice != 6) {
+		while(choice != 5) {
 			switch(choice) {
 			case 1:
 				addCustomer();
@@ -249,9 +244,6 @@ void showSelectionCustomer(int selected) {
 				searchCustomer();
 				break;
 			case 4:
-				viewCustomer();
-				break;
-			case 5:
 				viewCustomerDetail();
 				break;
 			default:
