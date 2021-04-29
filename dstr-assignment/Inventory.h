@@ -108,7 +108,7 @@ void inventoryMenu(int selected) {
 		cout << "3 View Inventory" << endl;
 		cout << "4 Search Inventory" << endl;
 		cout << "5 Sort Inventory" << endl;
-		cout << "6 Exit Inventory Management" << endl;
+		cout << "6 Exit Inventory Management\n" << endl;
 		//inventory management selection
 		int choice{};
 		inventoryMenu(choice);
