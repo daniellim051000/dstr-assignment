@@ -1,4 +1,15 @@
 #include "Customer.h"
+#include "Inventory.h"
+
+void showSelection() {
+	cout << "*** Bookstore System ***" << endl;
+	cout << "To perform an action, enter " << endl;
+	cout << "1 Customer Dashboard" << endl;
+	/*cout << "2 Product Dashboard" << endl;
+	cout << "3 Order Dasboard" << endl;*/
+	cout << "4 Transaction Dashboard" << endl;
+	cout << "3 to exit\n" << endl;
+}
 
 int main() {
 	int choice;

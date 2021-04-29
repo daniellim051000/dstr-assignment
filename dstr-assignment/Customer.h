@@ -216,10 +216,8 @@ void showSelectionCustomer(int selected) {
 		showSelectionCustomer(choice);
 		cin >> choice;
 
-		while (choice != 6)
-		{
-			switch (choice)
-			{
+		while(choice != 6) {
+			switch(choice) {
 			case 1:
 				addCustomer();
 				break;
@@ -243,14 +241,4 @@ void showSelectionCustomer(int selected) {
 			cin >> choice;
 		}
 	}
-}
-
-void showSelection() {
-	cout << "*** Bookstore System ***" << endl;
-	cout << "To perform an action, enter " << endl;
-	cout << "1 Customer Dashboard" << endl;
-	/*cout << "2 Product Dashboard" << endl;
-	cout << "3 Order Dasboard" << endl;*/
-	cout << "4 Transaction Dashboard" << endl;
-	cout << "3 to exit\n" << endl;
 }
