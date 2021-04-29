@@ -1,5 +1,6 @@
 #include "Customer.h"
 #include "Inventory.h"
+#include "Transaction.h"
 
 void showSelection() {
 	cout << "*** Bookstore System ***" << endl;
@@ -16,10 +17,8 @@ int main() {
 	showSelection();
 	cin >> choice;
 
-	while (choice != 5)
-	{
-		switch (choice)
-		{
+	while (choice != 5)	{
+		switch (choice) {
 		case 1:
 			showSelectionCustomer(choice);
 			break;
@@ -31,7 +30,7 @@ int main() {
 			inventoryMenu(choice);
 			break;
 		case 4:
-			//showSelectionOrder();
+			showSelectionTransaction(choice);
 			cout << "transaction havent complete" << endl;
 			break;
 		default:
