@@ -203,7 +203,7 @@ void viewCustomerDetail() {
 
 void showSelectionCustomer(int selected) {
 	if (selected == 1) {
-		cout << "*** Bookstore System ***" << endl;
+		cout << "*** Customer Management ***" << endl;
 		cout << "To perform an action, enter " << endl;
 		cout << "1 Add Customer Details" << endl;
 		cout << "2 Update Customer Details" << endl;
