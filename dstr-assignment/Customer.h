@@ -26,7 +26,6 @@ void addCustomer() {
 	//struct for those that consists of string data type
 	struct bookstoreInfo* addCustomers = new struct bookstoreInfo;
 	
-
 	cout << "	____________________________________" << endl;
 	cout << "	|Customer ID:\t\t\t    |" << endl;
 	cout << "	|\t\t\t\t    |" << endl;
@@ -88,9 +87,9 @@ void addCustomer() {
 	fstream file;
 	file.open("Customer.txt", ios_base::app);
 	// insert data into file
-	file << addCustomers->custId << ", "
-		<< addCustomers->name << ", "
-		<< addCustomers->phoneNo << ", "
+	file << addCustomers->custId << "\t "
+		<< addCustomers->name << "\t "
+		<< addCustomers->phoneNo << "\t "
 		<< addCustomers->email << endl;
 
 	cout << "Customer has successfully inserted " << endl;
@@ -101,15 +100,12 @@ void addCustomer() {
 
 void updateCustomer() {
 	int searchCustId;
+	int choice{};
 	cout << "Enter search customer ID: " << endl;
 	cin >> searchCustId;
 	struct bookstoreInfo* current;
 	current = head;
-	while (current == NULL) {
-		cout << "Can't find the entered customer ID! " << endl;
-		cout << "Reenter search customer ID: " << endl;
-		cin >> searchCustId;
-	}
+
 	while (current != NULL) {
 		if (current->custId == searchCustId) {
 			cout << "Customer ID \tName \t\t\tPhone Number \t\t\tEmail\n";
@@ -124,6 +120,7 @@ void updateCustomer() {
 			cout << "2 Edit Phone Number" << endl;
 			cout << "3 Edit Email" << endl;
 			cout << "4 to exit\n" << endl;
+			
 
 			int updateChoice;
 			cin >> updateChoice;
@@ -137,23 +134,23 @@ void updateCustomer() {
 				break;
 			case 2:
 				cout << "What is your phone number?" << endl << "Enter phone number: ";
-				//cin.ignore();
+				cin.ignore();
 				getline(cin, current->phoneNo);
 				while (regex_match(current->phoneNo, regex("[[:digit:]]{2}-[[:digit:]]{3}-[[:digit:]]{4}"))) {
 					cout << "Invalid input\n";
 					cout << "What is your phone number?" << endl << "Enter phone number: ";
-					//cin.ignore();
+					cin.ignore();
 					getline(cin, current->phoneNo);
 				}
 				break;
 			case 3:
 				cout << "What is your email?" << endl << "Enter email: ";
-				//cin.ignore();
+				cin.ignore();
 				getline(cin, current->email);
 				while (regex_match(current->email, regex("(\\w + )(\\. | _) ? (\\w*)@(\\w + )(\\.(\\w + )) + "))) {
 					cout << "Invalid input\n";
 					cout << "What is your email?" << endl << "Enter email: ";
-					//cin.ignore();
+					cin.ignore();
 					getline(cin, current->email);
 				}
 				break;
@@ -161,44 +158,42 @@ void updateCustomer() {
 				cout << "Invalid selection.\n" << endl;
 			}
 			
+			
 		}
 		else {
 			current = current->next;
 		}
 	}
+	cout << "Can't find the entered customer ID! " << endl;
+	cout << "Reenter search customer ID: " << endl;
+	cin >> searchCustId;
 }
 
 void searchCustomer() {
 	
 }
 
-void out(int* arr, int size) {
-	for (int i = 0; i < size; i++) {
-		cout << arr[i] << ", ";
-		/*cout << "Customer id: " << arr[0] << endl;
-		cout << "Customer name: " << arr[1] << endl;
-		cout << "Customer phone number: " << arr[2] << endl;
-		cout << "Customer email: " << arr[3] << endl;*/
-	}
-}
-
 void viewCustomer() {
-	int* arr;
-	int size;
+	int choice{};
 	string line;
+	int id;
+	string name, PhoneNo, Email;
 	ifstream file("Customer.txt");
-	file >> size;
-	arr = new int[size];
-	if (file.is_open()) {
-		while (getline(file, line)) {
-			for (int i = 0; i < size; i++) {
-				file >> arr[i];
-			}
-			file.close();
-			out(arr, size);
 
-			delete[] arr;
+	if (file.is_open()) {
+		cout << " _______________________________________________________________________________________________________________" << endl;
+		cout << " |Customer ID \t\tName \t\t\tPhone Number \t\t\tEmail\t\t\t\t|" << endl;
+		while (!file.eof()) {
+			// loop each element to the declared variables
+			while (file >> id >> name >> PhoneNo >> Email) {
+				cout << " |" << id << "\t\t\t" << name << "\t\t\t" << PhoneNo << "\t\t\t" << Email << " \t\t|" << endl;
+			}
 		}
+		cout << " |______________________________________________________________________________________________________________|" << endl;
+		file.close();
+	}
+	else {
+		cout << "Unable to open file!" << endl;
 	}
 }
 
@@ -208,7 +203,7 @@ void viewCustomerDetail() {
 
 void showSelectionCustomer(int selected) {
 	if (selected == 1) {
-		cout << "*** Bookstore System ***" << endl;
+		cout << "*** Customer Management ***" << endl;
 		cout << "To perform an action, enter " << endl;
 		cout << "1 Add Customer Details" << endl;
 		cout << "2 Update Customer Details" << endl;
@@ -221,10 +216,8 @@ void showSelectionCustomer(int selected) {
 		showSelectionCustomer(choice);
 		cin >> choice;
 
-		while (choice != 6)
-		{
-			switch (choice)
-			{
+		while(choice != 6) {
+			switch(choice) {
 			case 1:
 				addCustomer();
 				break;
@@ -248,14 +241,4 @@ void showSelectionCustomer(int selected) {
 			cin >> choice;
 		}
 	}
-}
-
-void showSelection() {
-	cout << "*** Bookstore System ***" << endl;
-	cout << "To perform an action, enter " << endl;
-	cout << "1 Customer Dashboard" << endl;
-	/*cout << "2 Product Dashboard" << endl;
-	cout << "3 Order Dasboard" << endl;*/
-	cout << "4 Transaction Dashboard" << endl;
-	cout << "3 to exit\n" << endl;
 }
