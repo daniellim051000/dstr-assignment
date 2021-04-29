@@ -31,7 +31,6 @@ int main() {
 			break;
 		case 4:
 			showSelectionTransaction(choice);
-			cout << "transaction havent complete" << endl;
 			break;
 		default:
 			cout << "Invalid selection.\n" << endl;

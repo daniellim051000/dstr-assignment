@@ -235,7 +235,7 @@ void viewTransactionDetail() {
 }
 
 void showSelectionTransaction(int selected) {
-	if (selected == 2) {
+	if (selected == 4) {
 		cout << "*** Transaction Management ***" << endl;
 		cout << "To perform an action, enter " << endl;
 		cout << "1 Add Transaction Details" << endl;
