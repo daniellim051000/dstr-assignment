@@ -120,7 +120,7 @@ void updateCustomer() {
 			cout << "2 Edit Phone Number" << endl;
 			cout << "3 Edit Email" << endl;
 			cout << "4 to exit\n" << endl;
-			
+
 
 			int updateChoice;
 			cin >> updateChoice;
@@ -157,8 +157,8 @@ void updateCustomer() {
 			default:
 				cout << "Invalid selection.\n" << endl;
 			}
-			
-			
+
+
 		}
 		else {
 			current = current->next;
@@ -170,23 +170,46 @@ void updateCustomer() {
 }
 
 void searchCustomer() {
-	
+	int searchCustId;
+	cout << "Enter search customer ID: ";
+	cin >> searchCustId;
+	int Id;
+	string Name, PhoneNo, Email;
+	ifstream file("Customer.txt");
+
+	if (file.is_open()) {
+			cout << " _______________________________________________________________________________________________________________" << endl;
+			cout << " |Customer ID \t\tName \t\t\tPhone Number \t\t\tEmail\t\t\t\t|" << endl;
+			//if file not end of the file
+			while (!file.eof()) {
+				// loop each element to the declared variables
+				while (file >> Id >> Name >> PhoneNo >> Email) {
+					if (Id == searchCustId) {
+						cout << " |" << Id << "\t\t\t" << Name << "\t\t\t" << PhoneNo << "\t\t\t" << Email << " \t\t|" << endl;
+					}
+				}
+			}
+			cout << " |______________________________________________________________________________________________________________|" << endl;
+			file.close();
+	}
+	else {
+		cout << "Unable to open file!" << endl;
+	}
 }
 
-void viewCustomer() {
-	int choice{};
-	string line;
-	int id;
-	string name, PhoneNo, Email;
+void viewCustomerDetail() {
+	int Id;
+	string Name, PhoneNo, Email;
 	ifstream file("Customer.txt");
 
 	if (file.is_open()) {
 		cout << " _______________________________________________________________________________________________________________" << endl;
 		cout << " |Customer ID \t\tName \t\t\tPhone Number \t\t\tEmail\t\t\t\t|" << endl;
+		//if file not end of the file
 		while (!file.eof()) {
 			// loop each element to the declared variables
-			while (file >> id >> name >> PhoneNo >> Email) {
-				cout << " |" << id << "\t\t\t" << name << "\t\t\t" << PhoneNo << "\t\t\t" << Email << " \t\t|" << endl;
+			while (file >> Id >> Name >> PhoneNo >> Email) {
+				cout << " |" << Id << "\t\t\t" << Name << "\t\t\t" << PhoneNo << "\t\t\t" << Email << " \t\t|" << endl;
 			}
 		}
 		cout << " |______________________________________________________________________________________________________________|" << endl;
@@ -197,26 +220,22 @@ void viewCustomer() {
 	}
 }
 
-void viewCustomerDetail() {
-
-}
 
 void showSelectionCustomer(int selected) {
 	if (selected == 1) {
-		cout << "*** Bookstore System ***" << endl;
+		cout << "*** Customer Management ***" << endl;
 		cout << "To perform an action, enter " << endl;
 		cout << "1 Add Customer Details" << endl;
 		cout << "2 Update Customer Details" << endl;
 		cout << "3 Search Customer" << endl;
-		cout << "4 View Customer" << endl;
-		cout << "5 View Customer Details" << endl;
-		cout << "6 to exit\n" << endl;
+		cout << "4 View Customer Details" << endl;
+		cout << "5 to exit\n" << endl;
 
 		int choice{};
 		showSelectionCustomer(choice);
 		cin >> choice;
 
-		while (choice != 6)
+		while (choice != 5)
 		{
 			switch (choice)
 			{
@@ -230,9 +249,6 @@ void showSelectionCustomer(int selected) {
 				searchCustomer();
 				break;
 			case 4:
-				viewCustomer();
-				break;
-			case 5:
 				viewCustomerDetail();
 				break;
 			default:
@@ -245,12 +261,4 @@ void showSelectionCustomer(int selected) {
 	}
 }
 
-void showSelection() {
-	cout << "*** Bookstore System ***" << endl;
-	cout << "To perform an action, enter " << endl;
-	cout << "1 Customer Dashboard" << endl;
-	/*cout << "2 Product Dashboard" << endl;
-	cout << "3 Order Dasboard" << endl;*/
-	cout << "4 Transaction Dashboard" << endl;
-	cout << "3 to exit\n" << endl;
-}
+
