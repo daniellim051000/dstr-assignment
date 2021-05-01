@@ -15,7 +15,7 @@ struct InventoryInfo {
 	InventoryInfo* next;
 };
 
-struct InventoryInfo* something = NULL;
+struct InventoryInfo* inventoryMain = NULL;
 void inventoryMenu(int selected);
 
 //add inventory function
@@ -28,8 +28,8 @@ void addInventory() {
 	
 	//check existing book id
 	struct InventoryInfo* checkID;
-	checkID = something;
-	while (checkID != NULL) {
+	checkID = inventoryMain;
+	while(checkID != NULL) {
 		//if got existing book id
 		if (addBook->BookID == checkID->BookID) {
 			cout << "there is duplicate book id" << endl << "please enter a new book id";
@@ -60,8 +60,8 @@ void addInventory() {
 	cout << "Enter book quantity: ";
 	cin >> addBook->Quantity;
 
-	addBook->next = something;
-	something = addBook;
+	addBook->next = inventoryMain;
+	inventoryMain = addBook;
 
 	//store data into inventory text file
 	fstream db;
@@ -73,8 +73,6 @@ void addInventory() {
 		<< addBook->Quantity << endl;
 	cout << "Book is succesfully added into inventory" << endl;
 	db.close();
-
-	
 }
 
 //Edit Invetory
@@ -84,7 +82,28 @@ void editInventory() {
 
 //view intenvory list
 void viewInventory() {
-	cout << "view inventory havent comeplete" << endl;
+	//cout << "view inventory havent comeplete" << endl;
+	int choice{};
+	string bookID;
+	string bookName;
+	string bookType;
+	string unitPrice;
+	string quantity;
+	ifstream file("Inventory.txt");
+
+	if (file.is_open()) {
+		cout << "-------------------------View Intentory---------------------" << endl;
+		cout << "Book ID \t Book Name \t Book Type \t Unit Price \t Quantitiry \t" << endl;
+		while (!file.eof()) {
+			while (file >> bookID >> bookName >> bookType >> unitPrice >> quantity) {
+				cout << bookID << "\t\t" << bookName << "\t\t" << bookType << "\t\t" << unitPrice << "\t\t" << quantity << "\t\t" << endl;
+			}
+		}
+		cout << "------------------------------------------------------------" << endl;
+		file.close();
+	} else {
+		cout << "unable to open file" << endl;
+	};
 }
 
 //search inventory
@@ -134,9 +153,8 @@ void inventoryMenu(int selected) {
 				cout << "Invalid selection. Please pick again.\n" << endl;
 			}
 			cout << endl;
-
-			//put 3 to make sure the selection is corresponding to the menu selected from the dashboard
-			inventoryMenu(3);
+			inventoryMenu(choice);
+			cin >> choice;
 		}
 	}
 }
