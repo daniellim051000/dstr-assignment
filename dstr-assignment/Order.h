@@ -66,9 +66,6 @@ void showOrderMenu(int selected) {
 			default:
 				cout << "Invalid selection. Please pick again.\n" << endl;
 			}
-			cout << endl;
-			inventoryMenu(choice);
-			cin >> choice;
 		}
 	}
 }
