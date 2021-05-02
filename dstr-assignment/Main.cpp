@@ -1,6 +1,7 @@
 #include "Customer.h"
 #include "Inventory.h"
 #include "Transaction.h"
+#include "Order.h";
 
 void showSelection() {
 	cout << "*** Bookstore System ***" << endl;
@@ -23,7 +24,7 @@ int main() {
 			showSelectionCustomer(choice);
 			break;
 		case 2:
-			cout << "order havent comeplete" << endl;
+			showOrderMenu(choice);
 			break;
 		case 3:
 			inventoryMenu(choice);

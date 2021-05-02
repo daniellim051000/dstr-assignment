@@ -29,5 +29,8 @@
     <ClInclude Include="Inventory.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Order.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
