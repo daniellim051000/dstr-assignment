@@ -1,2 +1,0 @@
-bk1	 book 1	 book	 20	 5
-bk2	 book 2	 book	 30	 5
