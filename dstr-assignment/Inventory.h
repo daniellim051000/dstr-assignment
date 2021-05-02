@@ -16,7 +16,7 @@ struct InventoryInfo {
 };
 
 struct InventoryInfo* inventoryMain = NULL;
-void inventoryMenu(int selected);
+void inventoryMenu();
 
 //add inventory function
 void addInventory() {
@@ -66,11 +66,7 @@ void addInventory() {
 	//store data into inventory text file
 	fstream db;
 	db.open("Inventory.txt", ios_base::app);
-	db << addBook->BookID << "\t "
-		<< addBook->BookName << "\t "
-		<< addBook->BookType << "\t "
-		<< addBook->UnitPrice << "\t "
-		<< addBook->Quantity << endl;
+	db << addBook->BookID << "," << addBook->BookName << "," << addBook->BookType << "," << addBook->UnitPrice << "," << addBook->Quantity << endl;
 	cout << "Book is succesfully added into inventory" << endl;
 	db.close();
 }
@@ -83,27 +79,8 @@ void editInventory() {
 //view intenvory list
 void viewInventory() {
 	//cout << "view inventory havent comeplete" << endl;
-	int choice{};
-	string bookID;
-	string bookName;
-	string bookType;
-	string unitPrice;
-	string quantity;
-	ifstream file("Inventory.txt");
-
-	if (file.is_open()) {
-		cout << "-------------------------View Intentory---------------------" << endl;
-		cout << "Book ID \t Book Name \t Book Type \t Unit Price \t Quantitiry \t" << endl;
-		while (!file.eof()) {
-			while (file >> bookID >> bookName >> bookType >> unitPrice >> quantity) {
-				cout << bookID << "\t\t" << bookName << "\t\t" << bookType << "\t\t" << unitPrice << "\t\t" << quantity << "\t\t" << endl;
-			}
-		}
-		cout << "------------------------------------------------------------" << endl;
-		file.close();
-	} else {
-		cout << "unable to open file" << endl;
-	};
+	system("CLS");
+	
 }
 
 //search inventory
@@ -117,8 +94,11 @@ void sortInventory() {
 }
 
 //show inventory menu
-void inventoryMenu(int selected) {
-	if (selected == 3) {
+void inventoryMenu() {
+	int choice;
+	string id;
+	system("CLS");
+	do {
 		//inventory menu information
 		cout << "Inventory Management" << endl;
 		cout << "To perform an action, enter" << endl;
@@ -128,33 +108,27 @@ void inventoryMenu(int selected) {
 		cout << "4 Search Inventory" << endl;
 		cout << "5 Sort Inventory" << endl;
 		cout << "6 Exit Inventory Management\n" << endl;
-		//inventory management selection
-		int choice{};
-		inventoryMenu(choice);
+		cout << "-----------------------------------" << endl;
 		cin >> choice;
-		while (choice != 6) {
-			switch (choice) {
-			case 1:
-				addInventory();
-				break;
-			case 2:
-				editInventory();
-				break;
-			case 3:
-				viewInventory();
-				break;
-			case 4:
-				searchInventory();
-				break;
-			case 5:
-				sortInventory();
-				break;
-			default:
-				cout << "Invalid selection. Please pick again.\n" << endl;
-			}
-			cout << endl;
-			inventoryMenu(choice);
-			cin >> choice;
+
+		switch (choice) {
+		case 1:
+			addInventory();
+			system("CLS");
+			break;
+		case 2:
+			editInventory();
+			break;
+		case 3:
+			viewInventory();
+			break;
+		case 4:
+			searchInventory();
+			break;
+		case 5:
+			sortInventory();
+			break;
 		}
-	}
+	} while (choice != 6);
+
 }

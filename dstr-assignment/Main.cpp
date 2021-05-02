@@ -27,7 +27,7 @@ int main() {
 			showOrderMenu(choice);
 			break;
 		case 3:
-			inventoryMenu(choice);
+			inventoryMenu();
 			break;
 		case 4:
 			showSelectionTransaction(choice);
