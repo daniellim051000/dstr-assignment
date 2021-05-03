@@ -8,67 +8,69 @@ using namespace std;
 //stucture the information of inventory
 struct InventoryInfo {
 	string BookID;
-	string BookType;
 	string BookName;
+	string BookType;
 	int UnitPrice;
 	int Quantity;
 	InventoryInfo* next;
 };
 
-struct InventoryInfo* inventoryMain = NULL;
+struct InventoryInfo* headInventory = NULL;
 void inventoryMenu();
 
 //add inventory function
 void addInventory() {
-	struct InventoryInfo* addBook = new struct InventoryInfo;
+	struct InventoryInfo* add_inventory = new struct InventoryInfo;
 
-	//input new inventoryid
-	cout << "Enter Book ID: ";
-	cin >> addBook->BookID;
-	
+	cout << "Enter Book ID >>";
+	cin >> add_inventory->BookID;
+
+	//create temp pointer
+	struct InventoryInfo* checkBookID;
+	checkBookID = headInventory;
+	//transverse
 	//check existing book id
-	struct InventoryInfo* checkID;
-	checkID = inventoryMain;
-	while(checkID != NULL) {
-		//if got existing book id
-		if (addBook->BookID == checkID->BookID) {
-			cout << "there is duplicate book id" << endl << "please enter a new book id";
-			cin >> addBook->BookID;
-			checkID = NULL;
-		} else {
-			//else proceed to adding inventory
-			checkID = checkID->next;
+	while (checkBookID != NULL) {
+		if (add_inventory->BookID == checkBookID->BookID) {
+			cout << "There is a duplicated Book ID." << endl;
+			cout << "Please enter a new Book ID >>" << endl;
+			cin >> add_inventory->BookID;
+			checkBookID = NULL;
+		}
+		else {
+			checkBookID = checkBookID->next;
 		}
 	}
 
-	//adding book into inventory
-	cout << "please enter book name" << endl;
-	cout << "Enter book name: ";
-	//use to ignore or clear one or more characters from the input buffer
-	cin.ignore();
-	getline(cin, addBook->BookName);
+	//book name
+	cout << "Please enter the Book Name >>";
+	cin >> add_inventory->BookName;
+	//getline(cin, add_inventory->BookName);
+	
+	//book type
+	cout << "Please Enter the book type >>";
+	//getline(cin, add_inventory->BookType);
+	cin >> add_inventory->BookType;
 
-	cout << "please enter book type" << endl;
-	cout << "Enter book type: ";
-	getline(cin, addBook->BookType);
+	//unit price for the book
+	cout << "Please enter the unit price for the book >>";
+	cin >> add_inventory->UnitPrice;
+	while (add_inventory->UnitPrice <0)	{
+		cout << "The Unit Price must at least 1" << endl;
+		cout << "Please Enter a new unit price for the book >>";
+		cin >> add_inventory->UnitPrice;
+	}
 
-	cout << "please enter book unit price" << endl;
-	cout << "Enter book unit price: ";
-	cin >> addBook->UnitPrice;
-
-	cout << "please enter book quantity" << endl;
-	cout << "Enter book quantity: ";
-	cin >> addBook->Quantity;
-
-	addBook->next = inventoryMain;
-	inventoryMain = addBook;
-
-	//store data into inventory text file
-	fstream db;
-	db.open("Inventory.txt", ios_base::app);
-	db << addBook->BookID << "," << addBook->BookName << "," << addBook->BookType << "," << addBook->UnitPrice << "," << addBook->Quantity << endl;
-	cout << "Book is succesfully added into inventory" << endl;
-	db.close();
+	//quantity 
+	cout << "Please enter the quantity for the book >>";
+	cin >> add_inventory->Quantity;
+	while (add_inventory->Quantity < 0) {
+		cout << "Minimum quantity must at least 1" << endl;
+		cout << "Please enter a renter quanity >>";
+		cin >> add_inventory->Quantity;
+	}
+	add_inventory->next = headInventory;
+	headInventory = add_inventory;
 }
 
 //Edit Invetory
@@ -80,12 +82,37 @@ void editInventory() {
 void viewInventory() {
 	//cout << "view inventory havent comeplete" << endl;
 	system("CLS");
+	struct InventoryInfo* view;
+	view = headInventory;
+	cout << "Book ID Book Name Book Type Unit Price Quantity" << endl;
+	if (view == NULL) {
+		cout << "No book in inventory" << endl;
+	}
+
+	while (view != NULL) {
+		cout << view->BookID << "  " << view->BookName << "  " << view->BookType << "  " << view->UnitPrice << "  " << view->Quantity << "  "  << endl;
+		view = view->next;
+	}
 	
 }
 
 //search inventory
 void searchInventory() {
-	cout << "search inventory havent comeplete" << endl;
+	string searchID;
+	cout << "Enter Book ID to perform search >>";
+	cin >> searchID;
+	struct InventoryInfo* current;
+	current = headInventory;
+	while (current != NULL) {
+		if (current->BookID == searchID) {
+			cout << "Book ID Book Name Book Type Unit Price Quantity" << endl;
+			cout << current->BookID << "  " << current->BookName << "  " << current->BookType << "  " << current->UnitPrice << "  " << current->Quantity << "  " << endl;
+			return;
+		}
+		else {
+			current = current->next;
+		}
+	}
 }
 
 //sort inventory
