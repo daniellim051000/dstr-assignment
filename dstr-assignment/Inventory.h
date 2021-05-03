@@ -75,7 +75,64 @@ void addInventory() {
 
 //Edit Invetory
 void editInventory() {
-	cout << "edit inventory havent comeplete" << endl;
+	string searchID;
+	cout << "Enter Book ID to Search >>";
+	cin >> searchID;
+	struct InventoryInfo* current;
+	current = headInventory;
+	while (current != NULL) {
+		if (current->BookID == searchID) {
+			int selection;
+			cout << "Book ID Book Name Book Type Unit Price Quantity" << endl;
+			cout << current->BookID << "  " << current->BookName << "  " << current->BookType << "  " << current->UnitPrice << "  " << current->Quantity << "  " << endl;
+			cout << "-----------------------------------" << endl;
+			cout << "Edit Inventory" << endl;
+			cout << "1 Edit Book Name" << endl;
+			cout << "2 Edit Book Type" << endl;
+			cout << "3 Edit Unit Price" << endl;
+			cout << "4 Edit Quantity" << endl;
+			cout << "5 Exit Edit Inventory\n" << endl;
+			cout << "-----------------------------------" << endl;		
+			cin >> selection;
+			switch (selection) {
+				case 1:
+					cout << "Enter the new Book Name >>";
+					cin >> current->BookName;
+					break;
+				case 2:
+					cout << "Enter the new book type >>";
+					cin >> current->BookType;
+					break;
+				case 3:
+					cout << "Enter the new Unit Price >>";
+					cin >> current->UnitPrice;
+					while (current->Quantity < 0) {
+						cout << "Unit Price must be at least 1" << endl;
+						cout << "please enter an new unit price >>";
+						cin >> current->UnitPrice;
+					}
+					break;
+				case 4:
+					cout << "Enter the new quantity >>";
+					cin >> current->Quantity;
+					while (current->Quantity < 0) {
+						cout << "quantity must be at least 1" << endl;
+						cout << "please enter an new quantity >>";
+						cin >> current->Quantity;
+					}
+					break;
+				case 5:
+					return;
+					system("CLS");
+				default:
+					cout << "Invalid selection.\n" << endl;
+			}
+		}
+		else {
+			cout << "No Book is found" << endl;
+			current = current->next;
+		}
+	}
 }
 
 //view intenvory list
@@ -88,12 +145,10 @@ void viewInventory() {
 	if (view == NULL) {
 		cout << "No book in inventory" << endl;
 	}
-
 	while (view != NULL) {
 		cout << view->BookID << "  " << view->BookName << "  " << view->BookType << "  " << view->UnitPrice << "  " << view->Quantity << "  "  << endl;
 		view = view->next;
 	}
-	
 }
 
 //search inventory
