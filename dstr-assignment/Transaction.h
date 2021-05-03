@@ -5,10 +5,22 @@
 #include <fstream>
 using namespace std;
 
+struct transactionInfo {
+	int custId, transId;
+	time_t now = time(0);
+	char* dateTime = ctime(&now);
+	string paymentType;
+	double totalPrice;
+	transactionInfo* next;
+};
+
+struct transactionInfo* headTransaction = NULL;
 void paymentOption();
+void transactionMenu();
+
 
 void addTransaction() {
-	struct bookstoreInfo* addTransactions = new struct bookstoreInfo;
+	struct transactionInfo* addTransactions = new struct transactionInfo;
 	ifstream transfile("Transaction.txt");
 	int transactionId;
 
@@ -28,21 +40,21 @@ void addTransaction() {
 	cin >> addTransactions->transId;
 
 	//creating temp pointer
-	struct bookstoreInfo* checkId;
-	checkId = head;
+	struct transactionInfo* checkCustId;
+	checkCustId = headTransaction;
 	//transverse
-	while (checkId != NULL) {
+	while (checkCustId != NULL) {
 		/*while (!transfile.eof()) {
 			while (transfile >> transactionId) {*/
 
-				if (addTransactions->transId == checkId->transId) {
+				if (addTransactions->transId == checkCustId->transId) {
 					//checkId->transId = transactionId;
 					cout << "Duplicate transaction ID!" << endl << "Please reenter transaction ID : ";
 					cin >> addTransactions->transId;
-					checkId = NULL; //to break the loop
+					checkCustId = NULL; //to break the loop
 				}
 				else {
-					checkId = checkId->next;
+					checkCustId = checkCustId->next;
 				}
 			//}
 		//}
@@ -101,14 +113,14 @@ void addTransaction() {
 		cout << "Unable to open file!" << endl;
 	}
 
-	addTransactions->next = head;
-	head = addTransactions;
+	addTransactions->next = headTransaction;
+	headTransaction = addTransactions;
 
 }
 
 void sortTransaction() {
-	struct bookstoreInfo* current;
-	current = head;
+	struct transactionInfo* current;
+	current = headTransaction;
 	int tempId, tempCustId;
 	string tempType;
 	char* tempDate{};
@@ -234,7 +246,7 @@ void viewTransactionDetail() {
 	}
 }
 
-void showSelectionTransaction() {
+void transactionMenu() {
 	int choice;
 	system("CLS");
 	do {
