@@ -234,44 +234,37 @@ void viewTransactionDetail() {
 	}
 }
 
-void showSelectionTransaction(int selected) {
-	if (selected == 4) {
+void showSelectionTransaction() {
+	int choice;
+	system("CLS");
+	do {
 		cout << "*** Transaction Management ***" << endl;
 		cout << "To perform an action, enter " << endl;
 		cout << "1 Add Transaction Details" << endl;
 		cout << "2 Sort Transaction" << endl;
 		cout << "3 Search Transaction" << endl;
 		cout << "4 View Transaction Details" << endl;
-		cout << "5 to exit\n" << endl;
-
-		int choice{};
-		showSelectionTransaction(choice);
+		cout << "5 Exit Transaction Management\n" << endl;
 		cin >> choice;
-
-		while (choice != 5)
+		switch (choice)
 		{
-			switch (choice)
-			{
-			case 1:
-				addTransaction();
-				break;
-			case 2:
-				sortTransaction();
-				break;
-			case 3:
-				searchTransaction();
-				break;
-			case 4:
-				viewTransactionDetail();
-				break;
-			default:
-				cout << "Invalid selection.\n" << endl;
-			}
-			cout << endl;
-			showSelectionTransaction(choice);
-			cin >> choice;
+		case 1:
+			addTransaction();
+			break;
+		case 2:
+			sortTransaction();
+			break;
+		case 3:
+			searchTransaction();
+			break;
+		case 4:
+			viewTransactionDetail();
+			break;
+		default:
+			cout << "Invalid selection.\n" << endl;
 		}
-	}
+	} while (choice != 5);
+	system("CLS");
 }
 
 void paymentOption() {

@@ -96,7 +96,6 @@ void sortInventory() {
 //show inventory menu
 void inventoryMenu() {
 	int choice;
-	string id;
 	system("CLS");
 	do {
 		//inventory menu information
@@ -130,5 +129,5 @@ void inventoryMenu() {
 			break;
 		}
 	} while (choice != 6);
-
+	system("CLS");
 }
