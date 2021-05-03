@@ -98,7 +98,21 @@ void viewInventory() {
 
 //search inventory
 void searchInventory() {
-	cout << "search inventory havent comeplete" << endl;
+	string searchID;
+	cout << "Enter Book ID to perform search >>";
+	cin >> searchID;
+	struct InventoryInfo* current;
+	current = headInventory;
+	while (current != NULL) {
+		if (current->BookID == searchID) {
+			cout << "Book ID Book Name Book Type Unit Price Quantity" << endl;
+			cout << current->BookID << "  " << current->BookName << "  " << current->BookType << "  " << current->UnitPrice << "  " << current->Quantity << "  " << endl;
+			return;
+		}
+		else {
+			current = current->next;
+		}
+	}
 }
 
 //sort inventory
