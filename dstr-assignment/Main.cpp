@@ -8,7 +8,6 @@ using namespace std;
 
 int main() {
 	int choice;
-	
 	do {
 		cout << "*** Bookstore System ***" << endl;
 		cout << "To perform an action, enter " << endl;
