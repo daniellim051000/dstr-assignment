@@ -5,26 +5,21 @@
 #include <fstream>
 using namespace std;
 
-struct bookstoreInfo {
-	//customer attribute
-	int custId, transId;
+struct customerInfo {
+	int custId;
 	string name, phoneNo, email;
-	//transaction attribute
-	time_t now = time(0);
-	char* dateTime = ctime(&now);
-	string paymentType;
-	double totalPrice;
-	bookstoreInfo* next;
+	customerInfo* next;
 };
+
 
 regex PhoneNo("[[:digit:]]{2}-[[:digit:]]{3}-[[:digit:]]{4}");
 regex Email("(\\w + )(\\. | _) ? (\\w*)@(\\w + )(\\.(\\w + )) + ");
-struct bookstoreInfo* head = NULL;
-void showSelectionCustomer();
+struct customerInfo* headCustomer = NULL;
+void customerMenu();
 
 void addCustomer() {
 	//struct for those that consists of string data type
-	struct bookstoreInfo* addCustomers = new struct bookstoreInfo;
+	struct customerInfo* addCustomers = new struct customerInfo;
 	
 	cout << "	____________________________________" << endl;
 	cout << "	|Customer ID:\t\t\t    |" << endl;
@@ -40,8 +35,8 @@ void addCustomer() {
 	cin >> addCustomers->custId;
 
 	//creating temp pointer
-	struct bookstoreInfo* checkId;
-	checkId = head;
+	struct customerInfo* checkId;
+	checkId = headCustomer;
 	//transverse
 	while (checkId != NULL) {
 		if (addCustomers->custId == checkId->custId) {
@@ -80,8 +75,8 @@ void addCustomer() {
 		getline(cin, addCustomers->email);
 	}
 
-	addCustomers->next = head;
-	head = addCustomers;
+	addCustomers->next = headCustomer;
+	headCustomer = addCustomers;
 
 	// store data into Customer.txt file
 	fstream file;
@@ -103,8 +98,8 @@ void updateCustomer() {
 	int choice{};
 	cout << "Enter search customer ID: " << endl;
 	cin >> searchCustId;
-	struct bookstoreInfo* current;
-	current = head;
+	struct customerInfo* current;
+	current = headCustomer;
 
 	while (current != NULL) {
 		if (current->custId == searchCustId) {
@@ -218,7 +213,7 @@ void viewCustomerDetail() {
 	}
 }
 
-void showSelectionCustomer() {
+void customerMenu() {
 	int choice{};
 	system("CLS");
 	do {
