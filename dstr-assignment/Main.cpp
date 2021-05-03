@@ -1,7 +1,10 @@
 #include "Customer.h"
 #include "Inventory.h"
 #include "Transaction.h"
-#include "Order.h";
+#include "Order.h"
+#include <iostream>
+
+using namespace std;
 
 int main() {
 	int choice;
@@ -17,7 +20,7 @@ int main() {
 		cin >> choice;
 		switch (choice) {
 		case 1:
-			showSelectionCustomer();
+			customerMenu();
 			break;
 		case 2:
 			showOrderMenu();
@@ -26,7 +29,7 @@ int main() {
 			inventoryMenu();
 			break;
 		case 4:
-			showSelectionTransaction();
+			transactionMenu();
 			break;
 		default:
 			cout << "Invalid selection.\n" << endl;
