@@ -123,7 +123,7 @@ void sortTransaction() {
 	current = headTransaction;
 	int tempId, tempCustId;
 	string tempType;
-	char* tempDate;
+	char* tempDate{};
 	double tempPrice;
 	//int Id, CustomerId;
 	//string Type, Price, Date;

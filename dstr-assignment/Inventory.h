@@ -221,7 +221,6 @@ void SaveToFile() {
 		current = current->next;
 
 		cout << "Customer has successfully inserted " << endl;
-		break;
 	}
 	file.close();
 
@@ -263,6 +262,7 @@ void inventoryMenu() {
 			break;
 		case 6:
 			SaveToFile();
+			break;
 			return;
 		}
 	} while (choice != 6);
