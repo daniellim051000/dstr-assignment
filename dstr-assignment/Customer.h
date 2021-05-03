@@ -95,7 +95,6 @@ void addCustomer() {
 
 void updateCustomer() {
 	int searchCustId;
-	int choice{};
 	cout << "Enter search customer ID: " << endl;
 	cin >> searchCustId;
 	struct customerInfo* current;
@@ -190,7 +189,6 @@ void searchCustomer() {
 }
 
 void viewCustomerDetail() {
-	int choice{};
 	string line;
 	int id;
 	string name, PhoneNo, Email;
@@ -214,7 +212,7 @@ void viewCustomerDetail() {
 }
 
 void customerMenu() {
-	int choice{};
+	int choice;
 	system("CLS");
 	do {
 		cout << "*** Customer Management ***" << endl;

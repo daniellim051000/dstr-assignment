@@ -33,7 +33,7 @@ void viewCancelOrder() {
 }
 
 void showOrderMenu() {
-	int choice{};
+	int choice;
 	system("CLS");
 	do {
 		cout << "Order Management" << endl;
