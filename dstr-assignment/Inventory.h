@@ -18,7 +18,7 @@ struct InventoryInfo* headInventory = NULL;
 void inventoryMenu();
 
 
-/*
+
 void OpenFile() {
 	string line;
 	struct InventoryInfo* current;
@@ -27,16 +27,23 @@ void OpenFile() {
 	if (myFile.is_open()) {
 		while (!myFile.eof()) {
 			// loop each element to the declared variables
-
-			}
+			getline(myFile, line);
+			int length = line.length();
+			for(int i = 0; i < length; i++) {
+				current->BookID = line[0];
+				current->BookName = line[1];
+				current->BookType = line[2];
+				current->UnitPrice = line[3];
+				current->Quantity = line[4];
+				i++;
+			} 
 		}
-		myFile.close();
 	}
 	else {
 		cout << "Unable to open file!" << endl;
 	}
+	myFile.close();
 }
-*/
 
 //add inventory function
 void addInventory() {
@@ -206,14 +213,15 @@ void SaveToFile() {
 	}
 	while (current != NULL) {
 		// insert data into file
-	file << current->BookID << ","
-		<< current->BookName << ","
-		<< current->BookType << ","
-		<< current->UnitPrice << ","
-		<< current->Quantity << endl;
+		file << current->BookID << ","
+			<< current->BookName << ","
+			<< current->BookType << ","
+			<< current->UnitPrice << ","
+			<< current->Quantity << endl;
+		current = current->next;
 
-	cout << "Customer has successfully inserted " << endl;
-	break;
+		cout << "Customer has successfully inserted " << endl;
+		break;
 	}
 	file.close();
 
@@ -253,8 +261,10 @@ void inventoryMenu() {
 		case 5:
 			sortInventory();
 			break;
+		case 6:
+			SaveToFile();
+			return;
 		}
 	} while (choice != 6);
-	SaveToFile();
 	system("CLS");
 }
