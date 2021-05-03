@@ -218,40 +218,35 @@ void viewCustomerDetail() {
 	}
 }
 
-void showSelectionCustomer(int selected) {
-	if (selected == 1) {
+void showSelectionCustomer() {
+	int choice{};
+	system("CLS");
+	do {
 		cout << "*** Customer Management ***" << endl;
 		cout << "To perform an action, enter " << endl;
 		cout << "1 Add Customer Details" << endl;
 		cout << "2 Update Customer Details" << endl;
 		cout << "3 Search Customer" << endl;
 		cout << "4 View Customer Details" << endl;
-		cout << "5 to exit\n" << endl;
-
-		int choice{};
-		showSelectionCustomer(choice);
+		cout << "5 Exit Customer Management\n" << endl;
 		cin >> choice;
 
-		while(choice != 5) {
-			switch(choice) {
-			case 1:
-				addCustomer();
-				break;
-			case 2:
-				updateCustomer();
-				break;
-			case 3:
-				searchCustomer();
-				break;
-			case 4:
-				viewCustomerDetail();
-				break;
-			default:
-				cout << "Invalid selection.\n" << endl;
-			}
-			cout << endl;
-			showSelectionCustomer(choice);
-			cin >> choice;
-		}
-	}
+		switch (choice) {
+		case 1:
+			addCustomer();
+			break;
+		case 2:
+			updateCustomer();
+			break;
+		case 3:
+			searchCustomer();
+			break;
+		case 4:
+			viewCustomerDetail();
+			break;
+		default:
+			cout << "Invalid selection.\n" << endl;
+		}	
+	} while (choice != 5);
+	system("CLS");
 }

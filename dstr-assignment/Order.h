@@ -32,40 +32,39 @@ void viewCancelOrder() {
 	cout << "havent complete" << endl;
 }
 
-void showOrderMenu(int selected) {
-	if (selected == 2) {
+void showOrderMenu() {
+	int choice{};
+	system("CLS");
+	do {
 		cout << "Order Management" << endl;
 		cout << "To perform an action, enter" << endl;
 		cout << "1 Add Order" << endl;
 		cout << "2 View Order" << endl;
 		cout << "3 Edit Order" << endl;
 		cout << "4 Cancel Order" << endl;
-		cout << "6 View Cancel Order" << endl;
-		cout << "5 Exit Order Management\n" << endl;
-
-		int choice{};
-		showOrderMenu(choice);
+		cout << "5 View Cancel Order" << endl;
+		cout << "6 Exit Order Management\n" << endl;
 		cin >> choice;
-		while (choice != 6) {
-			switch (choice) {
-			case 1:
-				addOrder();
-				break;
-			case 2:
-				viewOrder();
-				break;
-			case 3:
-				editOrder();
-				break;
-			case 4:
-				cancelOrder();
-				break;
-			case 5:
-				viewCancelOrder();
-				break;
-			default:
-				cout << "Invalid selection. Please pick again.\n" << endl;
-			}
+
+		switch (choice) {
+		case 1:
+			addOrder();
+			break;
+		case 2:
+			viewOrder();
+			break;
+		case 3:
+			editOrder();
+			break;
+		case 4:
+			cancelOrder();
+			break;
+		case 5:
+			viewCancelOrder();
+			break;
+		default:
+			cout << "Invalid selection. Please pick again.\n" << endl;
 		}
-	}
+	} while (choice != 6);
+	system("CLS");
 }
