@@ -20,7 +20,7 @@ struct bookstoreInfo {
 regex PhoneNo("[[:digit:]]{2}-[[:digit:]]{3}-[[:digit:]]{4}");
 regex Email("(\\w + )(\\. | _) ? (\\w*)@(\\w + )(\\.(\\w + )) + ");
 struct bookstoreInfo* head = NULL;
-void showSelectionCustomer(int selected);
+void showSelectionCustomer();
 
 void addCustomer() {
 	//struct for those that consists of string data type
