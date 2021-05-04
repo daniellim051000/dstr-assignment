@@ -17,34 +17,6 @@ struct InventoryInfo {
 struct InventoryInfo* headInventory = NULL;
 void inventoryMenu();
 
-
-
-void OpenFile() {
-	string line;
-	struct InventoryInfo* current;
-	current = headInventory;
-	ifstream myFile("Inventory.txt");
-	if (myFile.is_open()) {
-		while (!myFile.eof()) {
-			// loop each element to the declared variables
-			getline(myFile, line);
-			int length = line.length();
-			for(int i = 0; i < length; i++) {
-				current->BookID = line[0];
-				current->BookName = line[1];
-				current->BookType = line[2];
-				current->UnitPrice = line[3];
-				current->Quantity = line[4];
-				i++;
-			} 
-		}
-	}
-	else {
-		cout << "Unable to open file!" << endl;
-	}
-	myFile.close();
-}
-
 //add inventory function
 void addInventory() {
 	struct InventoryInfo* add_inventory = new struct InventoryInfo;
@@ -202,30 +174,6 @@ void sortInventory() {
 	cout << "sort inventory havent comeplete" << endl;
 }
 
-void SaveToFile() {
-	struct InventoryInfo* current;
-	current = headInventory;
-	fstream file;
-	file.open("Inventory.txt", ios_base::app);
-
-	if (current == NULL) {
-		cout << "No book in inventory" << endl;
-	}
-	while (current != NULL) {
-		// insert data into file
-		file << current->BookID << ","
-			<< current->BookName << ","
-			<< current->BookType << ","
-			<< current->UnitPrice << ","
-			<< current->Quantity << endl;
-		current = current->next;
-
-		cout << "Customer has successfully inserted " << endl;
-	}
-	file.close();
-
-}
-
 //show inventory menu
 void inventoryMenu() {
 	int choice;
@@ -260,10 +208,6 @@ void inventoryMenu() {
 		case 5:
 			sortInventory();
 			break;
-		case 6:
-			SaveToFile();
-			break;
-			return;
 		}
 	} while (choice != 6);
 	system("CLS");
