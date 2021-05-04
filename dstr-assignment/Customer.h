@@ -6,8 +6,7 @@
 using namespace std;
 
 struct customerInfo {
-	int custId;
-	string name, phoneNo, email;
+	string custId, name, phoneNo, email;
 	customerInfo* next;
 };
 
@@ -77,24 +76,10 @@ void addCustomer() {
 
 	addCustomers->next = headCustomer;
 	headCustomer = addCustomers;
-
-	// store data into Customer.txt file
-	fstream file;
-	file.open("Customer.txt", ios_base::app);
-	// insert data into file
-	file << addCustomers->custId << "\t "
-		<< addCustomers->name << "\t "
-		<< addCustomers->phoneNo << "\t "
-		<< addCustomers->email << endl;
-
-	cout << "Customer has successfully inserted " << endl;
-	file >> addCustomers->custId;
-	cout << addCustomers->custId << endl;
-	file.close();
 }
 
 void updateCustomer() {
-	int searchCustId;
+	string searchCustId;
 	cout << "Enter search customer ID: " << endl;
 	cin >> searchCustId;
 	struct customerInfo* current;
@@ -107,14 +92,13 @@ void updateCustomer() {
 				"\t \t" << current->name <<
 				"\t \t" << current->phoneNo <<
 				"\t \t \t" << current->email << "\n";
-
-			cout << "\nChoose the mark that you want to update:\n";
-			cout << "To perform an action, enter " << endl;
+			cout << "-----------------------------------" << endl;
+			cout << "Edit Customer" << endl;
 			cout << "1 Edit Name" << endl;
 			cout << "2 Edit Phone Number" << endl;
 			cout << "3 Edit Email" << endl;
-			cout << "4 to exit\n" << endl;
-			
+			cout << "4 Exit Edit Customer\n" << endl;
+
 			int updateChoice;
 			cin >> updateChoice;
 
@@ -123,7 +107,6 @@ void updateCustomer() {
 				cout << "What is your name?" << endl << "Enter name: ";
 				cin.ignore();
 				getline(cin, current->name);
-
 				break;
 			case 2:
 				cout << "What is your phone number?" << endl << "Enter phone number: ";
@@ -152,62 +135,46 @@ void updateCustomer() {
 			}
 		}
 		else {
+			cout << "No Customer is found" << endl;
 			current = current->next;
 		}
 	}
-	cout << "Can't find the entered customer ID! " << endl;
-	cout << "Reenter search customer ID: " << endl;
-	cin >> searchCustId;
 }
 
 void searchCustomer() {
-	int searchCustId;
+	string searchCustId;
 	cout << "Enter search customer ID: ";
 	cin >> searchCustId;
-	int Id;
-	string Name, PhoneNo, Email;
-	ifstream file("Customer.txt");
-
-	if (file.is_open()) {
-		cout << " _______________________________________________________________________________________________________________" << endl;
-		cout << " |Customer ID \t\tName \t\t\tPhone Number \t\t\tEmail\t\t\t\t|" << endl;
-		//if file not end of the file
-		while (!file.eof()) {
-			// loop each element to the declared variables
-			while (file >> Id >> Name >> PhoneNo >> Email) {
-				if (Id == searchCustId) {
-					cout << " |" << Id << "\t\t\t" << Name << "\t\t\t" << PhoneNo << "\t\t\t" << Email << " \t\t|" << endl;
-				}
-			}
-		}
-		cout << " |______________________________________________________________________________________________________________|" << endl;
-		file.close();
+	struct customerInfo* current;
+	current = headCustomer;
+	cout << "Transaction ID \tTotal Price \tPayment Type \tCustomer ID \tTransaction Date\t" << endl;
+	if (current == NULL) {
+		cout << "No transaction" << endl;
 	}
-	else {
-		cout << "Unable to open file!" << endl;
+	while (current != NULL) {
+		if (current->custId == searchCustId) {
+			cout << current->custId << " \t\t " << current->name << " \t\t " << current->phoneNo << " \t\t " << current->email << " \t " << endl;
+			return;
+		}
+		else {
+			current = current->next;
+		}
 	}
 }
 
 void viewCustomerDetail() {
-	string line;
-	int id;
-	string name, PhoneNo, Email;
-	ifstream file("Customer.txt");
-
-	if (file.is_open()) {
-		cout << " _______________________________________________________________________________________________________________" << endl;
-		cout << " |Customer ID \t\tName \t\t\tPhone Number \t\t\tEmail\t\t\t\t|" << endl;
-		while (!file.eof()) {
-			// loop each element to the declared variables
-			while (file >> id >> name >> PhoneNo >> Email) {
-				cout << " |" << id << "\t\t\t" << name << "\t\t\t" << PhoneNo << "\t\t\t" << Email << " \t\t|" << endl;
-			}
-		}
-		cout << " |______________________________________________________________________________________________________________|" << endl;
-		file.close();
+	string searchCustId;
+	cout << "Enter search customer ID: ";
+	cin >> searchCustId;
+	struct customerInfo* view;
+	view = headCustomer;
+	cout << "Transaction ID \tTotal Price \tPayment Type \tCustomer ID \tTransaction Date\t" << endl;
+	if (view == NULL) {
+		cout << "No transaction" << endl;
 	}
-	else {
-		cout << "Unable to open file!" << endl;
+	while (view != NULL) {
+			cout << view->custId << " \t\t " << view->name << " \t\t " << view->phoneNo << " \t\t " << view->email << " \t " << endl;
+			view = view->next;
 	}
 }
 
