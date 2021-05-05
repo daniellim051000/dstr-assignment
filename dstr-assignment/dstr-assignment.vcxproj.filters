@@ -29,7 +29,7 @@
     <ClInclude Include="Transaction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Order.h">
+    <ClInclude Include="link-transaction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
