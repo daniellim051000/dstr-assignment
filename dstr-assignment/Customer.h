@@ -130,6 +130,8 @@ void updateCustomer() {
 					getline(cin, current->email);
 				}
 				break;
+			case 4:
+				return;
 			default:
 				cout << "Invalid selection.\n" << endl;
 			}
