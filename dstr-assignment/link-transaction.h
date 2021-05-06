@@ -10,8 +10,8 @@ struct orderInfo {
 	char* dateTime = ctime(&currentTime);
 	string paymentType;
 	double totalPrice;
-	InventoryInfo* productDetails;
-	orderInfo* next=NULL;
+	InventoryInfo* productDetails=NULL;
+	orderInfo* next;
 	void setProduct(int id, string name, string category, int price, int qty);
 };
 
@@ -43,12 +43,12 @@ void addOrder() {
 
 	struct orderInfo* current1 = new struct orderInfo;
 	current1->transactionID=orderID;
-	orderID;
+	orderID++;
 	current1->setProduct(4, "test", "daniel", 12, 23);
 	current1->setProduct(22, "test2", "daniel2", 12, 23);
 	current1->setProduct(334, "test2", "daniel2", 12, 23);
 	current1->next = headOrder;
-	headOrder = current1;
+	headOrder = current1; 
 
 	
 	InventoryInfo* view = new InventoryInfo;
