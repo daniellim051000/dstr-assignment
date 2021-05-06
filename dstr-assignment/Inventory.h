@@ -7,15 +7,17 @@ using namespace std;
 
 //stucture the information of inventory
 struct InventoryInfo {
-	string BookID;
+	int BookID;
 	string BookName;
 	string BookType;
-	int UnitPrice;
+	double UnitPrice;
 	int Quantity;
 	InventoryInfo* next;
+	void push(InventoryInfo** head_ref, int id, string name, string category, int price, int qty);
 };
 struct InventoryInfo* headInventory = NULL;
 void inventoryMenu();
+
 
 //add inventory function
 void addInventory() {
@@ -74,7 +76,7 @@ void addInventory() {
 
 //Edit Invetory
 void editInventory() {
-	string searchID;
+	int searchID;
 	cout << "Enter Book ID to Search >>";
 	cin >> searchID;
 	struct InventoryInfo* current;
@@ -105,7 +107,7 @@ void editInventory() {
 				case 3:
 					cout << "Enter the new Unit Price >>";
 					cin >> current->UnitPrice;
-					while (current->Quantity < 0) {
+					while (current->UnitPrice < 0) {
 						cout << "Unit Price must be at least 1" << endl;
 						cout << "please enter an new unit price >>";
 						cin >> current->UnitPrice;
@@ -134,9 +136,74 @@ void editInventory() {
 	}
 }
 
+void deleteInventory() {
+	cout << "delete inventory havent comeplete" << endl;
+	/*int deleteID;
+	cout << "Enter Customer ID to delete record: " << endl;
+	cin >> deleteID;
+	//transverse
+	struct InventoryInfo* current = headInventory;
+
+	if (current == NULL) {
+		cout << "No customer record";
+	}
+
+	bool found = false;
+
+	while (current != NULL) {
+		if (head->custId == deleteID) {
+			cout << "Delete all elements of the record [Y/N]: " << endl;
+			char choice;
+			cin >> choice;
+
+			if (choice == 'Y' || choice == 'y') {
+				customerInfo* first = head;
+				first = first->next;
+				delete head;
+				//free(head)
+				head = first;
+			}
+			found = true;
+			cout << "Customer record deleted " << endl;
+			break;
+
+		}
+		else if (current->next->custId == deleteID) {
+			cout << "Customer ID \tName \tPhone Number \tEmail\n";
+			cout << "" << current->custId <<
+				"\t \t" << current->name <<
+				"\t \t \t" << current->phoneNo <<
+				"\t \t" << current->email << "\n";
+
+			cout << "Going to delete all elements of the record [Y/N]: " << endl;
+			char choice;
+			cin >> choice;
+
+			if (choice == 'Y' || choice == 'y') {
+				customerInfo* prev = current;
+				customerInfo* toDelete = current;
+				prev->next = toDelete->next;
+				delete toDelete;
+				//free(head)
+			}
+
+			found = true;
+			cout << "Customer record deleted " << endl;
+			break; // keep infinite loop
+
+		}
+		else {
+			current = current->next;
+		}
+	}
+
+	if (found == false) {
+		cout << "Customer not found! " << endl;
+	}*/
+}
+
 //view intenvory list
 void viewInventory() {
-	//cout << "view inventory havent comeplete" << endl;
 	system("CLS");
 	struct InventoryInfo* view;
 	view = headInventory;
@@ -152,7 +219,7 @@ void viewInventory() {
 
 //search inventory
 void searchInventory() {
-	string searchID;
+	int searchID;
 	cout << "Enter Book ID to perform search >>";
 	cin >> searchID;
 	struct InventoryInfo* current;
@@ -169,9 +236,410 @@ void searchInventory() {
 	}
 }
 
-//sort inventory
+//sort bookid, unit price, quantity
+void sortBookId_ascending() {
+	struct InventoryInfo* sort;
+	sort = headInventory;
+	int tempBookId;
+	string tempBookName;
+	string tempBookType;
+	double tempUnitPrice;
+	int tempQuantity;
+	int counter = 0;
+
+	if (sort == NULL) {
+		cout << "No transaction record" << endl;
+	}
+	else {
+		//get the total data for counter to loop
+		while (sort) {
+			sort = sort->next;
+			counter++;
+		}
+		sort = headInventory;
+
+		for (int i = 0; i < counter; i++) { // 1st loop
+			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
+				if (sort->BookID > sort->next->BookID) {
+					tempBookId = sort->BookID;
+					sort->BookID = sort->next->BookID;
+					sort->next->BookID = tempBookId;
+
+					tempBookName = sort->BookName;
+					sort->BookName = sort->next->BookName;
+					sort->next->BookName = tempBookName;
+
+					tempBookType = sort->BookType;
+					sort->BookType = sort->next->BookType;
+					sort->next->BookType = tempBookType;
+
+					tempUnitPrice = sort->UnitPrice;
+					sort->UnitPrice = sort->next->UnitPrice;
+					sort->next->UnitPrice = tempUnitPrice;
+
+					tempQuantity = sort->Quantity;
+					sort->Quantity = sort->next->Quantity;
+					sort->next->Quantity = tempQuantity;
+				}
+				sort = sort->next;
+			}
+			sort = headInventory;
+		}
+		cout << "Sorted Book ID in Ascending" << endl;
+		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		while (sort != NULL) {
+			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
+			sort = sort->next;
+		}
+	}
+}
+
+void sortBookId_descending() {
+	struct InventoryInfo* sort;
+	sort = headInventory;
+	int tempBookId;
+	string tempBookName;
+	string tempBookType;
+	double tempUnitPrice;
+	int tempQuantity;
+	int counter = 0;
+
+	if (sort == NULL) {
+		cout << "No transaction record" << endl;
+	}
+	else {
+		//get the total data for counter to loop
+		while (sort) {
+			sort = sort->next;
+			counter++;
+		}
+		sort = headInventory;
+
+		for (int i = 0; i < counter; i++) { // 1st loop
+			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
+				if (sort->BookID < sort->next->BookID) {
+					tempBookId = sort->BookID;
+					sort->BookID = sort->next->BookID;
+					sort->next->BookID = tempBookId;
+
+					tempBookName = sort->BookName;
+					sort->BookName = sort->next->BookName;
+					sort->next->BookName = tempBookName;
+
+					tempBookType = sort->BookType;
+					sort->BookType = sort->next->BookType;
+					sort->next->BookType = tempBookType;
+
+					tempUnitPrice = sort->UnitPrice;
+					sort->UnitPrice = sort->next->UnitPrice;
+					sort->next->UnitPrice = tempUnitPrice;
+
+					tempQuantity = sort->Quantity;
+					sort->Quantity = sort->next->Quantity;
+					sort->next->Quantity = tempQuantity;
+				}
+				sort = sort->next;
+			}
+			sort = headInventory;
+		}
+		cout << "Sorted Book ID in Descending" << endl;
+		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		while (sort != NULL) {
+			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
+			sort = sort->next;
+		}
+	}
+}
+
+void sortBookPrice_ascending() {
+	struct InventoryInfo* sort;
+	sort = headInventory;
+	int tempBookId;
+	string tempBookName;
+	string tempBookType;
+	double tempUnitPrice;
+	int tempQuantity;
+	int counter = 0;
+
+	if (sort == NULL) {
+		cout << "No transaction record" << endl;
+	}
+	else {
+		//get the total data for counter to loop
+		while (sort) {
+			sort = sort->next;
+			counter++;
+		}
+		sort = headInventory;
+
+		for (int i = 0; i < counter; i++) { // 1st loop
+			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
+				if (sort->UnitPrice > sort->next->UnitPrice) {
+					tempBookId = sort->BookID;
+					sort->BookID = sort->next->BookID;
+					sort->next->BookID = tempBookId;
+
+					tempBookName = sort->BookName;
+					sort->BookName = sort->next->BookName;
+					sort->next->BookName = tempBookName;
+
+					tempBookType = sort->BookType;
+					sort->BookType = sort->next->BookType;
+					sort->next->BookType = tempBookType;
+
+					tempUnitPrice = sort->UnitPrice;
+					sort->UnitPrice = sort->next->UnitPrice;
+					sort->next->UnitPrice = tempUnitPrice;
+
+					tempQuantity = sort->Quantity;
+					sort->Quantity = sort->next->Quantity;
+					sort->next->Quantity = tempQuantity;
+				}
+				sort = sort->next;
+			}
+			sort = headInventory;
+		}
+		cout << "Sorted Unit Price in Ascending" << endl;
+		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		while (sort != NULL) {
+			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
+			sort = sort->next;
+		}
+	}
+}
+
+void sortBookPrice_descending() {
+	struct InventoryInfo* sort;
+	sort = headInventory;
+	int tempBookId;
+	string tempBookName;
+	string tempBookType;
+	double tempUnitPrice;
+	int tempQuantity;
+	int counter = 0;
+
+	if (sort == NULL) {
+		cout << "No transaction record" << endl;
+	}
+	else {
+		//get the total data for counter to loop
+		while (sort) {
+			sort = sort->next;
+			counter++;
+		}
+		sort = headInventory;
+
+		for (int i = 0; i < counter; i++) { // 1st loop
+			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
+				if (sort->UnitPrice < sort->next->UnitPrice) {
+					tempBookId = sort->BookID;
+					sort->BookID = sort->next->BookID;
+					sort->next->BookID = tempBookId;
+
+					tempBookName = sort->BookName;
+					sort->BookName = sort->next->BookName;
+					sort->next->BookName = tempBookName;
+
+					tempBookType = sort->BookType;
+					sort->BookType = sort->next->BookType;
+					sort->next->BookType = tempBookType;
+
+					tempUnitPrice = sort->UnitPrice;
+					sort->UnitPrice = sort->next->UnitPrice;
+					sort->next->UnitPrice = tempUnitPrice;
+
+					tempQuantity = sort->Quantity;
+					sort->Quantity = sort->next->Quantity;
+					sort->next->Quantity = tempQuantity;
+				}
+				sort = sort->next;
+			}
+			sort = headInventory;
+		}
+		cout << "Sorted Unit Price in Descending" << endl;
+		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		while (sort != NULL) {
+			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
+			sort = sort->next;
+		}
+	}
+}
+
+void sortQuantity_ascending() {
+	struct InventoryInfo* sort;
+	sort = headInventory;
+	int tempBookId;
+	string tempBookName;
+	string tempBookType;
+	double tempUnitPrice;
+	int tempQuantity;
+	int counter = 0;
+
+	if (sort == NULL) {
+		cout << "No transaction record" << endl;
+	}
+	else {
+		//get the total data for counter to loop
+		while (sort) {
+			sort = sort->next;
+			counter++;
+		}
+		sort = headInventory;
+		
+		for (int i = 0; i < counter; i++) { // 1st loop
+			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
+				if (sort->Quantity > sort->next->Quantity) {
+					tempBookId = sort->BookID;
+					sort->BookID = sort->next->BookID;
+					sort->next->BookID = tempBookId;
+
+					tempBookName = sort->BookName;
+					sort->BookName = sort->next->BookName;
+					sort->next->BookName = tempBookName;
+
+					tempBookType = sort->BookType;
+					sort->BookType = sort->next->BookType;
+					sort->next->BookType = tempBookType;
+
+					tempUnitPrice = sort->UnitPrice;
+					sort->UnitPrice = sort->next->UnitPrice;
+					sort->next->UnitPrice = tempUnitPrice;
+
+					tempQuantity = sort->Quantity;
+					sort->Quantity = sort->next->Quantity;
+					sort->next->Quantity = tempQuantity;
+				}
+				sort = sort->next;
+			}
+			sort = headInventory;
+		}
+		cout << "Sorted Book Quantity in Ascending" << endl;
+		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		while (sort != NULL) {
+			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
+			sort = sort->next;
+		}
+	}
+}
+
+void sortQuantity_descending() {
+	struct InventoryInfo* sort;
+	sort = headInventory;
+	int tempBookId;
+	string tempBookName;
+	string tempBookType;
+	double tempUnitPrice;
+	int tempQuantity;
+	int counter = 0;
+
+	if (sort == NULL) {
+		cout << "No transaction record" << endl;
+	}
+	else {
+		//get the total data for counter to loop
+		while (sort) {
+			sort = sort->next;
+			counter++;
+		}
+		sort = headInventory;
+
+		for (int i = 0; i < counter; i++) { // 1st loop
+			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
+				if (sort->Quantity < sort->next->Quantity) {
+					tempBookId = sort->BookID;
+					sort->BookID = sort->next->BookID;
+					sort->next->BookID = tempBookId;
+
+					tempBookName = sort->BookName;
+					sort->BookName = sort->next->BookName;
+					sort->next->BookName = tempBookName;
+
+					tempBookType = sort->BookType;
+					sort->BookType = sort->next->BookType;
+					sort->next->BookType = tempBookType;
+
+					tempUnitPrice = sort->UnitPrice;
+					sort->UnitPrice = sort->next->UnitPrice;
+					sort->next->UnitPrice = tempUnitPrice;
+
+					tempQuantity = sort->Quantity;
+					sort->Quantity = sort->next->Quantity;
+					sort->next->Quantity = tempQuantity;
+				}
+				sort = sort->next;
+			}
+			sort = headInventory;
+		}
+		cout << "Sorted Book Quantity in Descending" << endl;
+		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		while (sort != NULL) {
+			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
+			sort = sort->next;
+		}
+	}
+}
+
 void sortInventory() {
-	cout << "sort inventory havent comeplete" << endl;
+	struct InventoryInfo* sort;
+	sort = headInventory;
+	if (sort == NULL) {
+		cout << "No transaction record" << endl;
+	}
+	else {
+		int choice;
+		system("CLS");
+		do {
+			// sort inventory menu information
+			cout << "Sort Invertory" << endl;
+			cout << "To perform an action, enter" << endl;
+			cout << "1 Sort Book ID in Ascending Order" << endl;
+			cout << "2 Sort Book ID in Descending Order" << endl;
+			cout << "3 Sort Book Price in Ascending Order" << endl;
+			cout << "4 Sort Book Price in Descending Order" << endl;
+			cout << "5 Sort Quantity in Ascending Order" << endl;
+			cout << "6 Sort Quantity in Descending Order" << endl;
+			cout << "7 Exit Sort Inventory \n" << endl;
+			cout << "-----------------------------------" << endl;
+			cin >> choice;
+
+			switch (choice) {
+			case 1:
+				sortBookId_ascending();
+				break;
+			case 2:
+				sortBookId_descending();
+				break;
+			case 3:
+				sortBookPrice_ascending();
+				break;
+			case 4:
+				sortBookPrice_descending();
+				break;
+			case 5:
+				sortQuantity_ascending();
+				break;
+			case 6:
+				sortQuantity_descending();
+				break;
+			}
+		} while (choice != 7);
+		system("CLS");
+	}
+}
+
+// push value
+void InventoryInfo::push(InventoryInfo** head_ref, int id, string name, string category, int price, int qty) {
+	bool duplicate = false;
+	InventoryInfo* as1 = new InventoryInfo;
+	// if id=0, then let system generates the book ID,else use the manual id provided by user
+	as1->BookID = id;
+	as1->BookName = name;
+	as1->BookType = category;
+	as1->UnitPrice = price;
+	as1->Quantity = qty;
+	as1->next = *head_ref;
+	*head_ref = as1;
+	//free(new_node);
 }
 
 //show inventory menu
@@ -212,3 +680,4 @@ void inventoryMenu() {
 	} while (choice != 6);
 	system("CLS");
 }
+
