@@ -642,25 +642,11 @@ void InventoryInfo::push(InventoryInfo** head_ref, int id, string name, string c
 	//free(new_node);
 }
 
-void InventoryInfo::push(InventoryInfo** head_ref, int id, string name, string category, int price, int qty) {
-	bool duplicate = false;
-	InventoryInfo* as1 = new InventoryInfo;
-	// if id=0, then let system generates the book ID,else use the manual id provided by user
-	as1->BookID = id;
-	as1->BookName = name;
-	as1->BookType = category;
-	as1->UnitPrice = price;
-	as1->Quantity = qty;
-	as1->next = *head_ref;
-	*head_ref = as1;
-	//free(new_node);
-}
-
 //show inventory menu
 void inventoryMenu() {
 	int choice;
 	system("CLS");
-	headInventory->push(&headInventory->productDetails, id, name, category, price, qty);
+	//headInventory->push(&headInventory->productDetails, id, name, category, price, qty);
 	do {
 		//inventory menu information
 		cout << "Inventory Management" << endl;
