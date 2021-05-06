@@ -13,11 +13,10 @@ struct InventoryInfo {
 	double UnitPrice;
 	int Quantity;
 	InventoryInfo* next;
-	void push(InventoryInfo** head_ref, int id, string name, string category, int price, int qty);
+	void push(InventoryInfo** head_ref, int id, string name, string category, double price, int qty);
 };
 struct InventoryInfo* headInventory = NULL;
 void inventoryMenu();
-
 
 //add inventory function
 void addInventory() {
@@ -49,16 +48,16 @@ void addInventory() {
 	//getline(cin, add_inventory->BookName);
 	
 	//book type
-	cout << "Please Enter the book type >>";
+	cout << "Please enter the book type >>";
 	//getline(cin, add_inventory->BookType);
 	cin >> add_inventory->BookType;
 
 	//unit price for the book
 	cout << "Please enter the unit price for the book >>";
 	cin >> add_inventory->UnitPrice;
-	while (add_inventory->UnitPrice <0)	{
+	while (add_inventory->UnitPrice < 0)	{
 		cout << "The Unit Price must at least 1" << endl;
-		cout << "Please Enter a new unit price for the book >>";
+		cout << "Please enter a new unit price for the book >>";
 		cin >> add_inventory->UnitPrice;
 	}
 
@@ -67,7 +66,7 @@ void addInventory() {
 	cin >> add_inventory->Quantity;
 	while (add_inventory->Quantity < 0) {
 		cout << "Minimum quantity must at least 1" << endl;
-		cout << "Please enter a renter quanity >>";
+		cout << "Please enter a new quanity >>";
 		cin >> add_inventory->Quantity;
 	}
 	add_inventory->next = headInventory;
@@ -109,7 +108,7 @@ void editInventory() {
 					cin >> current->UnitPrice;
 					while (current->UnitPrice < 0) {
 						cout << "Unit Price must be at least 1" << endl;
-						cout << "please enter an new unit price >>";
+						cout << "please enter a new unit price >>";
 						cin >> current->UnitPrice;
 					}
 					break;
@@ -118,7 +117,7 @@ void editInventory() {
 					cin >> current->Quantity;
 					while (current->Quantity < 0) {
 						cout << "quantity must be at least 1" << endl;
-						cout << "please enter an new quantity >>";
+						cout << "please enter a new quantity >>";
 						cin >> current->Quantity;
 					}
 					break;
@@ -137,69 +136,71 @@ void editInventory() {
 }
 
 void deleteInventory() {
-	cout << "delete inventory havent comeplete" << endl;
-	/*int deleteID;
-	cout << "Enter Customer ID to delete record: " << endl;
+	int deleteID;
+	cout << "Enter Book ID to delete record >> " << endl;
 	cin >> deleteID;
-	//transverse
-	struct InventoryInfo* current = headInventory;
-
-	if (current == NULL) {
-		cout << "No customer record";
+	// validation for int
+	while (!(cin.good())) {
+		cout << "Invlid Input! The input must NUMERIC" << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Please enter the Book ID >> ";
+		cin >> deleteID;
 	}
+	
+	InventoryInfo* current = headInventory;
+	InventoryInfo* previous = NULL;
+	InventoryInfo* tempnext = NULL;
 
-	bool found = false;
+	while (current->BookID != deleteID && current != NULL) {
+		previous = current;
+		current = current->next;
+		/*if (headInventory->Quantity != 0) {
+			cout << "Book Quantity is not ZERO! Cannot be deleted " << endl;
+			cout << "Please enter the Book ID>> ";
+			cin >> deleteID;
+		}*/
+	}
+	
+	if (current == NULL) {
+		cout << "No inventory record!" << endl;
+	}
+	else if (previous == NULL) { // delete at the beginning
+		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
+		cout << "Delete all elements of the record [Y/N]: " << endl;
+		char choice;
+		cin >> choice;
 
-	while (current != NULL) {
-		if (head->custId == deleteID) {
-			cout << "Delete all elements of the record [Y/N]: " << endl;
-			char choice;
-			cin >> choice;
-
-			if (choice == 'Y' || choice == 'y') {
-				customerInfo* first = head;
-				first = first->next;
-				delete head;
-				//free(head)
-				head = first;
-			}
-			found = true;
-			cout << "Customer record deleted " << endl;
-			break;
-
-		}
-		else if (current->next->custId == deleteID) {
-			cout << "Customer ID \tName \tPhone Number \tEmail\n";
-			cout << "" << current->custId <<
-				"\t \t" << current->name <<
-				"\t \t \t" << current->phoneNo <<
-				"\t \t" << current->email << "\n";
-
-			cout << "Going to delete all elements of the record [Y/N]: " << endl;
-			char choice;
-			cin >> choice;
-
-			if (choice == 'Y' || choice == 'y') {
-				customerInfo* prev = current;
-				customerInfo* toDelete = current;
-				prev->next = toDelete->next;
-				delete toDelete;
-				//free(head)
-			}
-
-			found = true;
-			cout << "Customer record deleted " << endl;
-			break; // keep infinite loop
-
+		if (choice == 'Y' || choice == 'y') {
+			tempnext = current->next;
+			headInventory = tempnext;
+			delete current;
+			cout << "Deleting..." << endl;
+			cout << "Book record has been deleted " << endl;
 		}
 		else {
-			current = current->next;
+			cout << "Book record is not delete " << endl;
 		}
 	}
+	else { // delete at the end
+		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
+		cout << "Delete all elements of the record [Y/N]2:" << endl;
+		char choice;
+		cin >> choice;
 
-	if (found == false) {
-		cout << "Customer not found! " << endl;
-	}*/
+		if (choice == 'Y' || choice == 'y') {
+			tempnext = current->next;
+			previous->next = tempnext;
+			delete current;
+			cout << "Deleting..." << endl;
+			cout << "Book record has been deleted " << endl;
+		}
+		else {
+			cout << "Book record is not delete " << endl;
+		}
+	}
 }
 
 //view intenvory list
@@ -207,12 +208,12 @@ void viewInventory() {
 	system("CLS");
 	struct InventoryInfo* view;
 	view = headInventory;
-	cout << "Book ID Book Name Book Type Unit Price Quantity" << endl;
+	cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
 	if (view == NULL) {
 		cout << "No book in inventory" << endl;
 	}
 	while (view != NULL) {
-		cout << view->BookID << "  " << view->BookName << "  " << view->BookType << "  " << view->UnitPrice << "  " << view->Quantity << "  "  << endl;
+		cout << view->BookID << " \t\t " << view->BookName << " \t\t " << view->BookType << " \t\t " << view->UnitPrice << " \t\t " << view->Quantity << " \t "  << endl;
 		view = view->next;
 	}
 }
@@ -226,8 +227,8 @@ void searchInventory() {
 	current = headInventory;
 	while (current != NULL) {
 		if (current->BookID == searchID) {
-			cout << "Book ID Book Name Book Type Unit Price Quantity" << endl;
-			cout << current->BookID << "  " << current->BookName << "  " << current->BookType << "  " << current->UnitPrice << "  " << current->Quantity << "  " << endl;
+			cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+			cout << current->BookID << " \t\t " << current->BookName << " \t\t " << current->BookType << " \t\t " << current->UnitPrice << " \t\t " << current->Quantity << " \t " << endl;
 			return;
 		}
 		else {
@@ -628,7 +629,7 @@ void sortInventory() {
 }
 
 // push value
-void InventoryInfo::push(InventoryInfo** head_ref, int id, string name, string category, int price, int qty) {
+void InventoryInfo::push(InventoryInfo** head_ref, int id, string name, string category, double price, int qty) {
 	bool duplicate = false;
 	InventoryInfo* as1 = new InventoryInfo;
 	// if id=0, then let system generates the book ID,else use the manual id provided by user
@@ -649,14 +650,16 @@ void inventoryMenu() {
 	//headInventory->push(&headInventory->productDetails, id, name, category, price, qty);
 	do {
 		//inventory menu information
+		cout << "-----------------------------------" << endl;
 		cout << "Inventory Management" << endl;
 		cout << "To perform an action, enter" << endl;
 		cout << "1 Add Inventory" << endl;
 		cout << "2 Edit Inventory" << endl;
-		cout << "3 View Inventory" << endl;
-		cout << "4 Search Inventory" << endl;
-		cout << "5 Sort Inventory" << endl;
-		cout << "6 Exit Inventory Management\n" << endl;
+		cout << "3 Delete Inventory" << endl;
+		cout << "4 View Inventory" << endl;
+		cout << "5 Search Inventory" << endl;
+		cout << "6 Sort Inventory" << endl;
+		cout << "7 Exit Inventory Management\n" << endl;
 		cout << "-----------------------------------" << endl;
 		cin >> choice;
 
@@ -669,13 +672,19 @@ void inventoryMenu() {
 			editInventory();
 			break;
 		case 3:
-			viewInventory();
+			deleteInventory();
 			break;
 		case 4:
-			searchInventory();
+			viewInventory();
 			break;
 		case 5:
+			searchInventory();
+			break;
+		case 6:
 			sortInventory();
+			break;
+		case 7:
+			return;
 			break;
 		}
 	} while (choice != 6);
