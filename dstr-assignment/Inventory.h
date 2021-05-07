@@ -31,7 +31,6 @@ void addInventory() {
 	//create temp pointer
 	struct InventoryInfo* checkBookID;
 	checkBookID = headInventory;
-	bookID++;	
 
 	//book name
 	cout << "Please enter the Book Name >>";
