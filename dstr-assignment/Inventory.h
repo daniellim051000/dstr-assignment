@@ -16,31 +16,22 @@ struct InventoryInfo {
 	void push(InventoryInfo** head_ref, int id, string name, string category, double price, int qty);
 };
 struct InventoryInfo* headInventory = NULL;
+int bookID = 1;
 void inventoryMenu();
 
 //add inventory function
 void addInventory() {
 	struct InventoryInfo* add_inventory = new struct InventoryInfo;
+	add_inventory->BookID = bookID;
+	bookID++; // auto generated book id
 
 	cout << "Enter Book ID >>";
-	cin >> add_inventory->BookID;
+	cout << add_inventory->BookID << endl;
 
 	//create temp pointer
 	struct InventoryInfo* checkBookID;
 	checkBookID = headInventory;
-	//transverse
-	//check existing book id
-	while (checkBookID != NULL) {
-		if (add_inventory->BookID == checkBookID->BookID) {
-			cout << "There is a duplicated Book ID." << endl;
-			cout << "Please enter a new Book ID >>" << endl;
-			cin >> add_inventory->BookID;
-			checkBookID = NULL;
-		}
-		else {
-			checkBookID = checkBookID->next;
-		}
-	}
+	bookID++;	
 
 	//book name
 	cout << "Please enter the Book Name >>";
@@ -55,8 +46,10 @@ void addInventory() {
 	//unit price for the book
 	cout << "Please enter the unit price for the book >>";
 	cin >> add_inventory->UnitPrice;
-	while (add_inventory->UnitPrice < 0)	{
-		cout << "The Unit Price must at least 1" << endl;
+	while (!cin.good() || add_inventory->UnitPrice < 0)	{ // validation for in and min price of  1
+		cout << "Please enter the valid Unit Price with at least 1" << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << "Please enter a new unit price for the book >>";
 		cin >> add_inventory->UnitPrice;
 	}
@@ -64,11 +57,14 @@ void addInventory() {
 	//quantity 
 	cout << "Please enter the quantity for the book >>";
 	cin >> add_inventory->Quantity;
-	while (add_inventory->Quantity < 0) {
-		cout << "Minimum quantity must at least 1" << endl;
+	while (!cin.good() || add_inventory->Quantity < 0) { // validation for int and min quantity of 1
+		cout << "Please enter the valid quantity with at least 1" << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << "Please enter a new quanity >>";
 		cin >> add_inventory->Quantity;
 	}
+
 	add_inventory->next = headInventory;
 	headInventory = add_inventory;
 }
@@ -76,14 +72,22 @@ void addInventory() {
 //Edit Invetory
 void editInventory() {
 	int searchID;
-	cout << "Enter Book ID to Search >>";
+	cout << "Please enter Book ID to Search >>";
 	cin >> searchID;
+	while (!(cin.good())) { // validation for int
+		cout << "Invalid Input! The input must be NUMERIC" << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Please enter a new Book ID to search >> ";
+		cin >> searchID;
+	}
+
 	struct InventoryInfo* current;
 	current = headInventory;
 	while (current != NULL) {
 		if (current->BookID == searchID) {
 			int selection;
-			cout << "Book ID Book Name Book Type Unit Price Quantity" << endl;
+			cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 			cout << current->BookID << "  " << current->BookName << "  " << current->BookType << "  " << current->UnitPrice << "  " << current->Quantity << "  " << endl;
 			cout << "-----------------------------------" << endl;
 			cout << "Edit Inventory" << endl;
@@ -108,8 +112,15 @@ void editInventory() {
 					cin >> current->UnitPrice;
 					while (current->UnitPrice < 0) {
 						cout << "Unit Price must be at least 1" << endl;
-						cout << "please enter a new unit price >>";
+						cout << "Please enter a new unit price >>";
 						cin >> current->UnitPrice;
+						if (!(cin.good())) { // validation for int
+							cout << "Invalid Input! The input must be NUMERIC" << endl;
+							cin.clear();
+							cin.ignore(numeric_limits<streamsize>::max(), '\n');
+							cout << "Please enter a new unit price >> ";
+							cin >> current->UnitPrice;
+						}
 					}
 					break;
 				case 4:
@@ -119,6 +130,13 @@ void editInventory() {
 						cout << "quantity must be at least 1" << endl;
 						cout << "please enter a new quantity >>";
 						cin >> current->Quantity;
+						if (!(cin.good())) { // validation for int
+							cout << "Invalid Input! The input must be NUMERIC" << endl;
+							cin.clear();
+							cin.ignore(numeric_limits<streamsize>::max(), '\n');
+							cout << "Please enter a new quantity >> ";
+							cin >> current->Quantity;
+						}
 					}
 					break;
 				case 5:
@@ -139,9 +157,8 @@ void deleteInventory() {
 	int deleteID;
 	cout << "Enter Book ID to delete record >> " << endl;
 	cin >> deleteID;
-	// validation for int
-	while (!(cin.good())) {
-		cout << "Invlid Input! The input must NUMERIC" << endl;
+	while (!(cin.good())) { // validation for int
+		cout << "Invalid Input! The input must be NUMERIC" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << "Please enter the Book ID >> ";
@@ -166,9 +183,10 @@ void deleteInventory() {
 		cout << "No inventory record!" << endl;
 	}
 	else if (previous == NULL) { // delete at the beginning
-		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
 		cout << "Delete all elements of the record [Y/N]: " << endl;
+		
 		char choice;
 		cin >> choice;
 
@@ -184,9 +202,10 @@ void deleteInventory() {
 		}
 	}
 	else { // delete at the end
-		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
 		cout << "Delete all elements of the record [Y/N]2:" << endl;
+		
 		char choice;
 		cin >> choice;
 
@@ -208,7 +227,7 @@ void viewInventory() {
 	system("CLS");
 	struct InventoryInfo* view;
 	view = headInventory;
-	cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+	cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 	if (view == NULL) {
 		cout << "No book in inventory" << endl;
 	}
@@ -223,11 +242,18 @@ void searchInventory() {
 	int searchID;
 	cout << "Enter Book ID to perform search >>";
 	cin >> searchID;
+	while (!(cin.good())) { // validation for int
+		cout << "Invalid Input! The input must be NUMERIC" << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Please enter a new Book ID to search >> ";
+		cin >> searchID;
+	}
 	struct InventoryInfo* current;
 	current = headInventory;
 	while (current != NULL) {
 		if (current->BookID == searchID) {
-			cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+			cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 			cout << current->BookID << " \t\t " << current->BookName << " \t\t " << current->BookType << " \t\t " << current->UnitPrice << " \t\t " << current->Quantity << " \t " << endl;
 			return;
 		}
@@ -287,7 +313,7 @@ void sortBookId_ascending() {
 			sort = headInventory;
 		}
 		cout << "Sorted Book ID in Ascending" << endl;
-		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		while (sort != NULL) {
 			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
 			sort = sort->next;
@@ -344,7 +370,7 @@ void sortBookId_descending() {
 			sort = headInventory;
 		}
 		cout << "Sorted Book ID in Descending" << endl;
-		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		while (sort != NULL) {
 			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
 			sort = sort->next;
@@ -401,7 +427,7 @@ void sortBookPrice_ascending() {
 			sort = headInventory;
 		}
 		cout << "Sorted Unit Price in Ascending" << endl;
-		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		while (sort != NULL) {
 			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
 			sort = sort->next;
@@ -458,7 +484,7 @@ void sortBookPrice_descending() {
 			sort = headInventory;
 		}
 		cout << "Sorted Unit Price in Descending" << endl;
-		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		while (sort != NULL) {
 			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
 			sort = sort->next;
@@ -515,7 +541,7 @@ void sortQuantity_ascending() {
 			sort = headInventory;
 		}
 		cout << "Sorted Book Quantity in Ascending" << endl;
-		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		while (sort != NULL) {
 			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
 			sort = sort->next;
@@ -572,7 +598,7 @@ void sortQuantity_descending() {
 			sort = headInventory;
 		}
 		cout << "Sorted Book Quantity in Descending" << endl;
-		cout << "Book ID \tBook Name \tBook Type \tUnit Price \tQuantity\t" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		while (sort != NULL) {
 			cout << sort->BookID << " \t\t " << sort->BookName << " \t\t " << sort->BookType << " \t\t " << sort->UnitPrice << " \t\t " << sort->Quantity << " \t" << endl;
 			sort = sort->next;
@@ -622,6 +648,11 @@ void sortInventory() {
 			case 6:
 				sortQuantity_descending();
 				break;
+			case 7: 
+				return;
+				break;
+			default: 
+				cout << "Invalid selection! Please select again " << endl;
 			}
 		} while (choice != 7);
 		system("CLS");
@@ -686,6 +717,8 @@ void inventoryMenu() {
 		case 7:
 			return;
 			break;
+		default:
+			cout << "Invalid selection! Please select again " << endl;
 		}
 	} while (choice != 6);
 	system("CLS");
