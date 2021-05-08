@@ -30,7 +30,7 @@ struct InventoryInfo {
 	void setQuantity(int Quantity);
 };
 struct InventoryInfo* headInventory = NULL;
-int bookID = 1;
+int bookID = 2;
 void inventoryMenu();
 
 int InventoryInfo::getInventoryID() {

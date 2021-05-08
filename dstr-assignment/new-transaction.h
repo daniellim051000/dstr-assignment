@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <string>
 #include "Inventory.h"
 #include <string>
 using namespace std;
@@ -30,14 +32,7 @@ Transaction* headTransaction = NULL;
 Transaction* transaction1 = new Transaction;
 InventoryInfo* seeInventory = new InventoryInfo;
 
-InventoryInfo* Transaction::getAddedBooks() {
-	return this->bookDetails;
-}
-
-void Transaction::setAddedBooks(int id, string name, string booktype, double unitPrice, int quantity) {
-	InventoryInfo* current = new InventoryInfo;
-	current->push(&this->bookDetails, id, name, booktype, unitPrice, quantity);
-}
+void newTransaction();
 
 int Transaction::getNewID() {
 	return this->transactionID;
@@ -55,12 +50,21 @@ void Transaction::setTotalPrice(double totalPrice) {
 	this->totatPrice = totalPrice;
 }
 
+InventoryInfo* Transaction::getAddedBooks() {
+	return this->bookDetails;
+}
+
+void Transaction::setAddedBooks(int id, string name, string booktype, double unitPrice, int quantity) {
+	InventoryInfo* current = new InventoryInfo;
+	current->push(&this->bookDetails, id, name, booktype, unitPrice, quantity);
+}
+
 void Transaction::newTransaction() {
 	Transaction* newCart = new Transaction;
 
 	viewCart(&newCart);
 	int choice;
-	int newTransID = 1;
+	int newTransID = 1001;
 	
 	//set new id for transaction
 	newCart->setNewID(newTransID);
@@ -73,14 +77,8 @@ void Transaction::newTransaction() {
 		case 1:
 			addToCart(&newCart);
 			break;
-		case 2:
-			
-			break;
 		case 3:
 			viewCart(&newCart);
-			break;
-		case4:
-
 			break;
 		default:
 			cout << "Invalid selection.\n" << endl;
@@ -101,10 +99,10 @@ void Transaction::addToCart(Transaction** head) {
 		if (counter == 0) {
 			cout << "please enter the book id wanted to add into cart" << endl;
 			itemInStock->displayInventory(NULL);
-			cout << "To exit. please enter 0 to exit" << endl;
+			cout << "To exit. please enter 1 to exit" << endl;
 			cin >> choice;
-			if (choice == 0) {
-				return;
+			if (choice == 1) {
+				break;
 			}
 			temp = itemInStock->search(choice, NULL);
 			if (temp == NULL) {
@@ -124,7 +122,7 @@ void Transaction::addToCart(Transaction** head) {
 					cin.ignore();
 				}
 				cout << "Invalid input" << endl;
-				cout << "Please enter the quantity which is less then stock" << endl;
+				cout << "Please key in the postive number for quantity" << endl;
 				cin >> quantity;
 			}
 			if (quantity == 0)break;
@@ -134,7 +132,7 @@ void Transaction::addToCart(Transaction** head) {
 			}
 			//if the cart is empty, then allow add
 			if (cart == NULL) {
-				(*head)->setAddedBooks(temp->getInventoryID(), temp->getBookName(), temp->getBookType(), temp->getUnitPrice(), temp->getQuantity());
+				(*head)->setAddedBooks(temp->getInventoryID(), temp->getBookName(), temp->getBookType(), temp->getUnitPrice(), quantity);
 				return;
 			}
 			//search for the choosen book in the transaction cart
@@ -142,13 +140,12 @@ void Transaction::addToCart(Transaction** head) {
 			//if the book is not found in the cart
 			if (itemInCart == NULL) {
 				cout << "there is nothing in cart" << endl;
-				(*head)->setAddedBooks(temp->getInventoryID(), temp->getBookName(), temp->getBookType(), temp->getUnitPrice(), temp->getQuantity());
+				(*head)->setAddedBooks(temp->getInventoryID(), temp->getBookName(), temp->getBookType(), temp->getUnitPrice(), quantity);
 				return;
 			}
 			else {
-				cout << "Counter is running" << endl;
-				cout << to_string(itemInCart->getQuantity()) << endl;
 				if (temp->getQuantity() < itemInCart->getQuantity() + quantity) {
+					//here got problem
 					cout << "quantity more than stock available. please re-enter a smaller number" << endl;
 					continue;
 				}
@@ -163,8 +160,6 @@ void Transaction::addToCart(Transaction** head) {
 				}
 				counter++;
 			}
-			return;
-			return;
 		}
 	} while (counter < 2);
 }
@@ -261,7 +256,7 @@ void showNewTransMenu() {
 		cout << "1 Create Transaction" << endl;
 		cout << "2 View Transaction Details" << endl;
 		cout << "3 Sort Transaction" << endl;
-		cout << "5 Exit Order Management\n" << endl;
+		cout << "4 Exit Order Management\n" << endl;
 		cin >> choice;
 
 		switch (choice) {
@@ -269,10 +264,7 @@ void showNewTransMenu() {
 			transaction1->newTransaction();
 			break;
 		case 2:
-			
-			break;
-		case 3:
-			editOrder();
+			transaction1->showTransactionRecord();
 			break;
 		default:
 			cout << "Invalid selection. Please pick again.\n" << endl;

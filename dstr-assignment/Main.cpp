@@ -1,6 +1,5 @@
 #include "Customer.h"
 #include "Inventory.h"
-#include "link-transaction.h"
 #include "new-transaction.h"
 #include <iostream>
 
