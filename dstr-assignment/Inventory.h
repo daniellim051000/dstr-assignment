@@ -69,11 +69,11 @@ void editInventory() {
 	int searchID;
 	cout << "Please enter Book ID to Search >>";
 	cin >> searchID;
-	while (!(cin.good())) { // validation for int
-		cout << "Invalid Input! The input must be NUMERIC" << endl;
+	while (!cin.good() || searchID < 0) { // validation for int and min quantity of 1
+		cout << "Please enter the valid quantity with at least 1" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << "Please enter a new Book ID to search >> ";
+		cout << "Please enter a new quanity >>";
 		cin >> searchID;
 	}
 
@@ -83,7 +83,7 @@ void editInventory() {
 		if (current->BookID == searchID) {
 			int selection;
 			cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
-			cout << current->BookID << "  " << current->BookName << "  " << current->BookType << "  " << current->UnitPrice << "  " << current->Quantity << "  " << endl;
+			cout << current->BookID << " \t\t " << current->BookName << " \t\t " << current->BookType << " \t\t " << current->UnitPrice << " \t\t " << current->Quantity << " \t " << endl;
 			cout << "-----------------------------------" << endl;
 			cout << "Edit Inventory" << endl;
 			cout << "1 Edit Book Name" << endl;
@@ -91,61 +91,51 @@ void editInventory() {
 			cout << "3 Edit Unit Price" << endl;
 			cout << "4 Edit Quantity" << endl;
 			cout << "5 Exit Edit Inventory\n" << endl;
-			cout << "-----------------------------------" << endl;		
+			cout << "-----------------------------------" << endl;
 			cin >> selection;
 			switch (selection) {
-				case 1:
-					cout << "Enter the new Book Name >>";
-					cin >> current->BookName;
-					break;
-				case 2:
-					cout << "Enter the new book type >>";
-					cin >> current->BookType;
-					break;
-				case 3:
-					cout << "Enter the new Unit Price >>";
+			case 1:
+				cout << "Enter the new Book Name >>";
+				cin >> current->BookName;
+				break;
+			case 2:
+				cout << "Enter the new book type >>";
+				cin >> current->BookType;
+				break;
+			case 3:
+				cout << "Enter the new Unit Price >>";
+				cin >> current->UnitPrice;
+				while (!cin.good() || current->UnitPrice < 0) { // validation for in and min price of  1
+					cout << "Please enter the valid Unit Price with at least 1" << endl;
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					cout << "Please enter a new unit price for the book >>";
 					cin >> current->UnitPrice;
-					while (current->UnitPrice < 0) {
-						cout << "Unit Price must be at least 1" << endl;
-						cout << "Please enter a new unit price >>";
-						cin >> current->UnitPrice;
-						if (!(cin.good())) { // validation for int
-							cout << "Invalid Input! The input must be NUMERIC" << endl;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-							cout << "Please enter a new unit price >> ";
-							cin >> current->UnitPrice;
-						}
-					}
-					break;
-				case 4:
-					cout << "Enter the new quantity >>";
+				}
+				break;
+			case 4:
+				cout << "Enter the new quantity >>";
+				cin >> current->Quantity;
+				while (!cin.good() || current->Quantity < 0) { // validation for int and min quantity of 1
+					cout << "Please enter the valid quantity with at least 1" << endl;
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					cout << "Please enter a new quanity >>";
 					cin >> current->Quantity;
-					while (current->Quantity < 0) {
-						cout << "quantity must be at least 1" << endl;
-						cout << "please enter a new quantity >>";
-						cin >> current->Quantity;
-						if (!(cin.good())) { // validation for int
-							cout << "Invalid Input! The input must be NUMERIC" << endl;
-							cin.clear();
-							cin.ignore(numeric_limits<streamsize>::max(), '\n');
-							cout << "Please enter a new quantity >> ";
-							cin >> current->Quantity;
-						}
-					}
-					break;
-				case 5:
-					return;
-					system("CLS");
-				default:
-					cout << "Invalid selection.\n" << endl;
+				}
+				break;
+			case 5:
+				return;
+				system("CLS");
+			default:
+				cout << "Invalid selection.\n" << endl;
 			}
 		}
 		else {
-			cout << "No Book is found" << endl;
 			current = current->next;
 		}
 	}
+		cout << "No Book is found" << endl;
 }
 
 void deleteInventory() {
@@ -166,8 +156,8 @@ void deleteInventory() {
 
 	while (current->BookID != deleteID && current != NULL) {
 		previous = current;
-		current = current->next;
-		/*if (headInventory->Quantity != 0) {
+		current = current->next;	
+		/*if (current->Quantity != 0) {
 			cout << "Book Quantity is not ZERO! Cannot be deleted " << endl;
 			cout << "Please enter the Book ID>> ";
 			cin >> deleteID;
@@ -715,7 +705,6 @@ void inventoryMenu() {
 		default:
 			cout << "Invalid selection! Please select again " << endl;
 		}
-	} while (choice != 6);
+	} while (choice != 7);
 	system("CLS");
 }
-
