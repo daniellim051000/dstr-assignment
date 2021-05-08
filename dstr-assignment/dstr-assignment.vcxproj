@@ -145,6 +145,7 @@
     <ClInclude Include="Customer.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="link-transaction.h" />
+    <ClInclude Include="new-transaction.h" />
     <ClInclude Include="Transaction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

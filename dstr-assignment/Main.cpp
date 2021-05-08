@@ -1,7 +1,7 @@
 #include "Customer.h"
 #include "Inventory.h"
-#include "Transaction.h"
 #include "link-transaction.h"
+#include "new-transaction.h"
 #include <iostream>
 
 using namespace std;
@@ -24,7 +24,7 @@ int main() {
 			inventoryMenu();
 			break;
 		case 3:
-			transactionMenu();
+			showNewTransMenu();
 			break;
 		default:
 			cout << "Invalid selection.\n" << endl;

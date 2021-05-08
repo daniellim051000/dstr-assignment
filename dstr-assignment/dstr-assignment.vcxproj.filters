@@ -32,5 +32,8 @@
     <ClInclude Include="link-transaction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="new-transaction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -13,11 +13,81 @@ struct InventoryInfo {
 	double UnitPrice;
 	int Quantity;
 	InventoryInfo* next;
+
 	void push(InventoryInfo** head_ref, int id, string name, string category, double price, int qty);
+	void displayInventory(InventoryInfo* head);
+	std::string showInventory(int method);
+	InventoryInfo* search(int id, InventoryInfo* head);
+	int getInventoryID();
+	void setInventoryID(int BookID);
+	std::string getBookName();
+	void setBookName(string BookName);
+	std::string getBookType();
+	void setBookType(string BookType);
+	double getUnitPrice();
+	void setUnitPrice(double UnitPrice);
+	int getQuantity();
+	void setQuantity(int Quantity);
 };
 struct InventoryInfo* headInventory = NULL;
 int bookID = 1;
 void inventoryMenu();
+
+int InventoryInfo::getInventoryID() {
+	return this->BookID;
+}
+
+void InventoryInfo::setInventoryID(int BookID) {
+	this->BookID = bookID;
+}
+
+string InventoryInfo::getBookName() {
+	return this->BookName;
+}
+
+void InventoryInfo::setBookName(string BookName) {
+	this->BookName = BookName;
+}
+
+string InventoryInfo::getBookType() {
+	return this->BookType;
+}
+
+void InventoryInfo::setBookType(string BookType) {
+	this->BookType = BookType;
+}
+
+double InventoryInfo::getUnitPrice() {
+	return this->UnitPrice;
+}
+
+void InventoryInfo::setUnitPrice(double UnitPrice) {
+	this->UnitPrice = UnitPrice;
+}
+
+int InventoryInfo::getQuantity() {
+	return this->Quantity;
+}
+
+void InventoryInfo::setQuantity(int Quantity) {
+	this->Quantity = Quantity;
+}
+
+
+string InventoryInfo::showInventory(int method) {
+	switch (method) {
+		case 1: {
+			return to_string(getInventoryID()) + "\t" + getBookName() + "\t" + getBookType() + "\t" + to_string(getUnitPrice()) + "\t" + to_string(getQuantity()) + "\n";
+		}
+			  break;
+		case 2: {
+			return "Book ID   : " + to_string(getInventoryID()) + "\n" + "Book Name : " + getBookName() + "\n" + "Category  : " + getBookType() + "\n" + "Unit Price  : " + to_string(getUnitPrice()) + "\n" + "Quantity     :RM " + to_string(getQuantity()) + "\n";
+		}
+			  break;
+		default:
+			return "Book ID   : " + to_string(getInventoryID()) + "\n" + "Book Name : " + getBookName() + "\n" + "Category  : " + getBookType() + "\n" + "Unit Price  : " + to_string(getUnitPrice()) + "\n" + "Quantity     :RM " + to_string(getQuantity()) + "\n";
+	}
+}
 
 //add inventory function
 void addInventory() {
@@ -220,6 +290,46 @@ void viewInventory() {
 		cout << view->BookID << " \t\t " << view->BookName << " \t\t " << view->BookType << " \t\t " << view->UnitPrice << " \t\t " << view->Quantity << " \t "  << endl;
 		view = view->next;
 	}
+}
+
+void InventoryInfo::displayInventory(InventoryInfo* head) {
+	struct InventoryInfo* view;
+	cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
+	if (head == NULL) {
+		view = headInventory;
+	}
+	else {
+		view = head;
+	}
+	if (view == NULL) {
+		cout << "No book in inventory" << endl;
+	}
+	while (view != NULL) {
+		cout << view->BookID << " \t\t " << view->BookName << " \t\t " << view->BookType << " \t\t " << view->UnitPrice << " \t\t " << view->Quantity << " \t " << endl;
+		view = view->next;
+	}
+}
+
+//search inventory
+InventoryInfo* InventoryInfo::search(int id, InventoryInfo* head) {
+	struct InventoryInfo* current;
+	if (head == NULL) {
+		current = headInventory;
+	}
+	else
+	{
+		current = head;
+	}
+	if (current == NULL) {
+		return current;
+	} while (current != NULL) {
+		if (current->getInventoryID() == id) {
+			return current;
+		}
+		current = current->next;
+	}
+	current = NULL;
+	return current;
 }
 
 //search inventory
