@@ -77,16 +77,16 @@ void InventoryInfo::setQuantity(int Quantity) {
 
 string InventoryInfo::showInventory(int method) {
 	switch (method) {
-		case 1: {
-			return to_string(getInventoryID()) + "\t" + getBookName() + "\t" + getBookType() + "\t" + to_string(getUnitPrice()) + "\t" + to_string(getQuantity()) + "\n";
-		}
-			  break;
-		case 2: {
-			return "Book ID    : " + to_string(getInventoryID()) + "\n" + "Book Name  : " + getBookName() + "\n" + "Category   : " + getBookType() + "\n" + "Unit Price :RM " + to_string(getUnitPrice()) + "\n" + "Quantity   : " + to_string(getQuantity()) + "\n";
-		}
-			  break;
-		default:
-			return "Book ID    : " + to_string(getInventoryID()) + "\n" + "Book Name  : " + getBookName() + "\n" + "Category   : " + getBookType() + "\n" + "Unit Price :RM " + to_string(getUnitPrice()) + "\n" + "Quantity   : " + to_string(getQuantity()) + "\n";
+	case 1: {
+		return to_string(getInventoryID()) + "\t" + getBookName() + "\t" + getBookType() + "\t" + to_string(getUnitPrice()) + "\t" + to_string(getQuantity()) + "\n";
+	}
+		  break;
+	case 2: {
+		return "Book ID    : " + to_string(getInventoryID()) + "\n" + "Book Name  : " + getBookName() + "\n" + "Category   : " + getBookType() + "\n" + "Unit Price :RM " + to_string(getUnitPrice()) + "\n" + "Quantity   : " + to_string(getQuantity()) + "\n";
+	}
+		  break;
+	default:
+		return "Book ID    : " + to_string(getInventoryID()) + "\n" + "Book Name  : " + getBookName() + "\n" + "Category   : " + getBookType() + "\n" + "Unit Price :RM " + to_string(getUnitPrice()) + "\n" + "Quantity   : " + to_string(getQuantity()) + "\n";
 	}
 }
 
@@ -181,7 +181,7 @@ void addInventory() {
 	//unit price for the book
 	cout << "Please enter the unit price for the book >>";
 	cin >> add_inventory->UnitPrice;
-	while (!cin.good() || add_inventory->UnitPrice < 0)	{ // validation for in and min price of  1
+	while (!cin.good() || add_inventory->UnitPrice < 0) { // validation for in and min price of  1
 		cout << "Please enter the valid Unit Price with at least 1" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -343,7 +343,7 @@ void editInventory() {
 			current = current->next;
 		}
 	}
-		cout << "No Book is found" << endl;
+	cout << "No Book is found" << endl;
 }
 
 void deleteInventory() {
@@ -358,21 +358,21 @@ void deleteInventory() {
 		cout << "Please enter the Book ID >> ";
 		cin >> deleteID;
 	}
-	
+
 	InventoryInfo* current = headInventory;
 	InventoryInfo* previous = NULL;
 	InventoryInfo* tempnext = NULL;
 
 	while (current->BookID != deleteID && current != NULL) {
 		previous = current;
-		current = current->next;	
+		current = current->next;
 		/*if (current->Quantity != 0) {
 			cout << "Book Quantity is not ZERO! Cannot be deleted " << endl;
 			cout << "Please enter the Book ID>> ";
 			cin >> deleteID;
 		}*/
 	}
-	
+
 	if (current == NULL) {
 		cout << "No inventory record!" << endl;
 	}
@@ -380,7 +380,7 @@ void deleteInventory() {
 		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
 		cout << "Delete all elements of the record [Y/N]: " << endl;
-		
+
 		char choice;
 		cin >> choice;
 
@@ -399,7 +399,7 @@ void deleteInventory() {
 		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 		cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
 		cout << "Delete all elements of the record [Y/N]2:" << endl;
-		
+
 		char choice;
 		cin >> choice;
 
@@ -426,7 +426,7 @@ void viewInventory() {
 		cout << "No book in inventory" << endl;
 	}
 	while (view != NULL) {
-		cout << view->BookID << " \t\t " << view->BookName << " \t\t " << view->BookType << " \t\t " << view->UnitPrice << " \t\t " << view->Quantity << " \t "  << endl;
+		cout << view->BookID << " \t\t " << view->BookName << " \t\t " << view->BookType << " \t\t " << view->UnitPrice << " \t\t " << view->Quantity << " \t " << endl;
 		view = view->next;
 	}
 }
@@ -746,7 +746,7 @@ void sortQuantity_ascending() {
 			counter++;
 		}
 		sort = headInventory;
-		
+
 		for (int i = 0; i < counter; i++) { // 1st loop
 			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
 				if (sort->Quantity > sort->next->Quantity) {
@@ -882,10 +882,10 @@ void sortInventory() {
 			case 6:
 				sortQuantity_descending();
 				break;
-			case 7: 
+			case 7:
 				return;
 				break;
-			default: 
+			default:
 				cout << "Invalid selection! Please select again " << endl;
 			}
 		} while (choice != 7);
@@ -976,7 +976,7 @@ void filterCategory() {
 
 		//here got problem
 		if (current->BookType != filter) {
-				cout << "No book in " << filter << " category" << endl;
+			cout << "No book in " << filter << " category" << endl;
 		}
 		else {
 			cout << "Filtered Book List" << endl;
@@ -985,9 +985,9 @@ void filterCategory() {
 				if (current->BookType == filter) {
 					cout << current->BookID << " \t\t " << current->BookName << " \t\t " << current->BookType << " \t\t " << current->UnitPrice << " \t\t " << current->Quantity << " \t " << endl;
 				}
-					current = current->next;
+				current = current->next;
 			}
-		//}
+		}
 	}
 }
 
@@ -1024,7 +1024,7 @@ void InventoryInfo::updateInventoryStatus(InventoryInfo* status) {
 	status = status->next;
 }
 
-//show inventory menu
+	//show inventory menu
 void inventoryMenu() {
 	int choice;
 	system("CLS");
@@ -1065,7 +1065,7 @@ void inventoryMenu() {
 		case 6:
 			sortInventory();
 			break;
-		case 7: 
+		case 7:
 			filterCategory();
 			break;
 		case 8:
