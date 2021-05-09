@@ -7,12 +7,11 @@
 using namespace std;
 
 struct Transaction {
-	private:
 		int transactionID;
 		double totatPrice;
 		InventoryInfo* bookDetails = NULL;
 		Transaction* next;
-	public:
+
 		void viewCart(Transaction** head);
 		void newTransaction();
 		//transaction id
@@ -277,6 +276,107 @@ double Transaction::calculateTotal(Transaction** head) {
 	return total;
 }
 
+void sortTotalPriceAscending() {
+	struct Transaction* sort;
+	sort = headTransaction;
+	int tempID;
+	double tempPrice;
+	int counter = 0;
+	if (sort == NULL) {
+		cout << "there is no transaction" << endl;
+	}
+	else {
+		while (sort != NULL) {
+			sort = sort->next;
+			counter++;
+		}
+	}
+	for (int i = 0; i < counter; i++) {
+		while (sort != NULL && sort->next != NULL) {
+			if (sort->totatPrice > sort->next->totatPrice) {
+				tempID = sort->transactionID;
+				sort->transactionID = sort->next->transactionID;
+				sort->next->transactionID = tempID;
+
+				tempPrice = sort->totatPrice;
+				sort->totatPrice = sort->next->totatPrice;
+				sort->next->totatPrice = tempPrice;
+			}
+			sort = sort->next;
+		}
+		sort = headTransaction;
+	}
+	cout << "Sort Transaction in Ascending" << endl;
+	cout << "Transaction ID Total Price" << endl;
+	while (sort != NULL) {
+		cout << sort->transactionID << " " << sort->totatPrice << endl;
+		sort = sort->next;
+	}
+}
+
+void sortTotalPriceDescending() {
+	struct Transaction* sort;
+	sort = headTransaction;
+	int tempID;
+	double tempPrice;
+	int counter = 0;
+	if (sort == NULL) {
+		cout << "there is no transaction" << endl;
+	}
+	else {
+		while (sort != NULL) {
+			sort = sort->next;
+			counter++;
+		}
+	}
+	for (int i = 0; i < counter; i++) {
+		while (sort != NULL && sort->next != NULL) {
+			if (sort->totatPrice < sort->next->totatPrice) {
+				tempID = sort->transactionID;
+				sort->transactionID = sort->next->transactionID;
+				sort->next->transactionID = tempID;
+
+				tempPrice = sort->totatPrice;
+				sort->totatPrice = sort->next->totatPrice;
+				sort->next->totatPrice = tempPrice;
+			}
+			sort = sort->next;
+		}
+		sort = headTransaction;
+	}
+	cout << "Sort Transaction in Descending" << endl;
+	cout << "Transaction ID Total Price" << endl;
+	while (sort != NULL) {
+		cout << sort->transactionID << " " << sort->totatPrice << endl;
+		sort = sort->next;
+	}
+}
+
+void sortTransaction() {
+	int choice;
+	system("CLS");
+	do {
+		cout << "Sort Transaction" << endl;
+		cout << "To perform an action, enter" << endl;
+		cout << "1 Sort Book Price in Ascending Order" << endl;
+		cout << "2 Sort Book Price in Descending Order" << endl;
+		cout << "3 TO Exit" << endl;
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+			sortTotalPriceAscending();
+			break;
+		case 2:
+			sortTotalPriceDescending();
+			break;
+		default:
+			cout << "Invalid selection. Please pick again.\n" << endl;
+		}
+	} while (choice != 3);
+	system("CLS");
+}
+
 void showNewTransMenu() {
 	int choice;
 	system("CLS");
@@ -296,6 +396,10 @@ void showNewTransMenu() {
 			break;
 		case 2:
 			transaction1->showTransactionRecord();
+			break;
+		case 3:
+			sortTransaction();
+			system("CLS");
 			break;
 		default:
 			cout << "Invalid selection. Please pick again.\n" << endl;
