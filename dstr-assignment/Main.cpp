@@ -1,4 +1,3 @@
-#include "Customer.h"
 #include "Inventory.h"
 #include "new-transaction.h"
 #include <iostream>
