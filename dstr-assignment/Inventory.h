@@ -96,6 +96,7 @@ void addInventory() {
 	add_inventory->BookID = bookID;
 	bookID++; // auto generated book id
 
+	//book id
 	cout << "Enter Book ID >>";
 	cout << add_inventory->BookID << endl;
 
@@ -103,11 +104,79 @@ void addInventory() {
 	cout << "Please enter the Book Name >>";
 	cin >> add_inventory->BookName;
 	//getline(cin, add_inventory->BookName);
-	
+
 	//book type
-	cout << "Please enter the book type >>";
-	//getline(cin, add_inventory->BookType);
-	cin >> add_inventory->BookType;
+	int choice = 0;
+	do {
+		cout << "Please choose the book category >>" << endl;
+		cout << "---------Fiction------------" << endl;
+		cout << "1 Classics" << endl;
+		cout << "2 Mystery" << endl;
+		cout << "3 Fantasy" << endl;
+		cout << "4 Romance" << endl;
+		cout << "5 Science" << endl;
+		cout << "---------Non-Fiction---------" << endl;
+		cout << "6 Poetry" << endl;
+		cout << "7 Self-Help" << endl;
+		cout << "8 CookBook" << endl;
+		cout << "9 Memoir" << endl;
+		cout << "10 History" << endl;
+		cout << "-----------------------------------" << endl;
+		cin >> choice;
+		if (choice == 1) {
+			add_inventory->BookType = "Classics";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 2) {
+			add_inventory->BookType = "Mystery";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 3) {
+			add_inventory->BookType = "Fantasy";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 4) {
+			add_inventory->BookType = "Romance";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 5) {
+			add_inventory->BookType = "Science";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 6) {
+			add_inventory->BookType = "Poetry";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 7) {
+			add_inventory->BookType = "Self-Help";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 8) {
+			add_inventory->BookType = "CookBook";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 9) {
+			add_inventory->BookType = "Memoir";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else if (choice == 10) {
+			add_inventory->BookType = "History";
+			cout << add_inventory->BookType << endl;
+			break;
+		}
+		else {
+			cout << "Invalid selection.\n" << endl;
+		}
+	} while (choice != 10);
 
 	//unit price for the book
 	cout << "Please enter the unit price for the book >>";
@@ -130,7 +199,6 @@ void addInventory() {
 		cout << "Please enter a new quanity >>";
 		cin >> add_inventory->Quantity;
 	}
-
 	add_inventory->next = headInventory;
 	headInventory = add_inventory;
 }
@@ -153,6 +221,7 @@ void editInventory() {
 	while (current != NULL) {
 		if (current->BookID == searchID) {
 			int selection;
+			int choice;
 			cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
 			cout << current->BookID << " \t\t " << current->BookName << " \t\t " << current->BookType << " \t\t " << current->UnitPrice << " \t\t " << current->Quantity << " \t " << endl;
 			cout << "-----------------------------------" << endl;
@@ -165,15 +234,83 @@ void editInventory() {
 			cout << "-----------------------------------" << endl;
 			cin >> selection;
 			switch (selection) {
-			case 1:
+			case 1: // edit book name
 				cout << "Enter the new Book Name >>";
 				cin >> current->BookName;
 				break;
-			case 2:
-				cout << "Enter the new book type >>";
-				cin >> current->BookType;
+			case 2:// edit book type
+				do {
+					cout << "Please choose the new book category >>" << endl;
+					cout << "---------Fiction------------" << endl;
+					cout << "1 Classics" << endl;
+					cout << "2 Mystery" << endl;
+					cout << "3 Fantasy" << endl;
+					cout << "4 Romance" << endl;
+					cout << "5 Science" << endl;
+					cout << "---------Non-Fiction---------" << endl;
+					cout << "6 Poetry" << endl;
+					cout << "7 Self-Help" << endl;
+					cout << "8 CookBook" << endl;
+					cout << "9 Memoir" << endl;
+					cout << "10 History" << endl;
+					cout << "-----------------------------------" << endl;
+					cin >> choice;
+					if (choice == 1) {
+						current->BookType = "Classics";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 2) {
+						current->BookType = "Mystery";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 3) {
+						current->BookType = "Fantasy";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 4) {
+						current->BookType = "Romance";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 5) {
+						current->BookType = "Science";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 6) {
+						current->BookType = "Poetry";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 7) {
+						current->BookType = "Self-Help";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 8) {
+						current->BookType = "CookBook";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 9) {
+						current->BookType = "Memoir";
+						cout << current->BookType << endl;
+						break;
+					}
+					else if (choice == 10) {
+						current->BookType = "History";
+						cout << current->BookType << endl;
+						break;
+					}
+					else {
+						cout << "Invalid selection.\n" << endl;
+					}
+				} while (choice != 10);
 				break;
-			case 3:
+			case 3: // edit book unit price
 				cout << "Enter the new Unit Price >>";
 				cin >> current->UnitPrice;
 				while (!cin.good() || current->UnitPrice < 0) { // validation for in and min price of  1
@@ -184,7 +321,7 @@ void editInventory() {
 					cin >> current->UnitPrice;
 				}
 				break;
-			case 4:
+			case 4: // edit book quantity
 				cout << "Enter the new quantity >>";
 				cin >> current->Quantity;
 				while (!cin.good() || current->Quantity < 0) { // validation for int and min quantity of 1
@@ -211,6 +348,7 @@ void editInventory() {
 
 void deleteInventory() {
 	int deleteID;
+	int choice;
 	cout << "Enter Book ID to delete record >> " << endl;
 	cin >> deleteID;
 	while (!(cin.good())) { // validation for int
@@ -371,7 +509,7 @@ void sortBookId_ascending() {
 	int counter = 0;
 
 	if (sort == NULL) {
-		cout << "No transaction record" << endl;
+		cout << "No inventory record" << endl;
 	}
 	else {
 		//get the total data for counter to loop
@@ -428,7 +566,7 @@ void sortBookId_descending() {
 	int counter = 0;
 
 	if (sort == NULL) {
-		cout << "No transaction record" << endl;
+		cout << "No inventory record" << endl;
 	}
 	else {
 		//get the total data for counter to loop
@@ -485,7 +623,7 @@ void sortBookPrice_ascending() {
 	int counter = 0;
 
 	if (sort == NULL) {
-		cout << "No transaction record" << endl;
+		cout << "No inventory record" << endl;
 	}
 	else {
 		//get the total data for counter to loop
@@ -542,7 +680,7 @@ void sortBookPrice_descending() {
 	int counter = 0;
 
 	if (sort == NULL) {
-		cout << "No transaction record" << endl;
+		cout << "No inventory record" << endl;
 	}
 	else {
 		//get the total data for counter to loop
@@ -599,7 +737,7 @@ void sortQuantity_ascending() {
 	int counter = 0;
 
 	if (sort == NULL) {
-		cout << "No transaction record" << endl;
+		cout << "No inventory record" << endl;
 	}
 	else {
 		//get the total data for counter to loop
@@ -656,7 +794,7 @@ void sortQuantity_descending() {
 	int counter = 0;
 
 	if (sort == NULL) {
-		cout << "No transaction record" << endl;
+		cout << "No inventory record" << endl;
 	}
 	else {
 		//get the total data for counter to loop
@@ -706,7 +844,7 @@ void sortInventory() {
 	struct InventoryInfo* sort;
 	sort = headInventory;
 	if (sort == NULL) {
-		cout << "No transaction record" << endl;
+		cout << "No inventory record" << endl;
 	}
 	else {
 		int choice;
@@ -752,6 +890,104 @@ void sortInventory() {
 			}
 		} while (choice != 7);
 		system("CLS");
+	}
+}
+
+void filterCategory() {
+	struct InventoryInfo* current;
+	current = headInventory;
+	string filter;
+	int counter = 0;
+	int choice;
+	if (current == NULL) {
+		cout << "No inventory record" << endl;
+	}
+	else {
+		do {
+			cout << "Please choose the book category to filter >>" << endl;
+			cout << "---------Fiction------------" << endl;
+			cout << "1 Classics" << endl;
+			cout << "2 Mystery" << endl;
+			cout << "3 Fantasy" << endl;
+			cout << "4 Romance" << endl;
+			cout << "5 Science" << endl;
+			cout << "---------Non-Fiction---------" << endl;
+			cout << "6 Poetry" << endl;
+			cout << "7 Self-Help" << endl;
+			cout << "8 CookBook" << endl;
+			cout << "9 Memoir" << endl;
+			cout << "10 History" << endl;
+			cout << "-----------------------------------" << endl;
+			cin >> choice;
+			if (choice == 1) {
+				filter = "Classics";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 2) {
+				filter = "Mystery";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 3) {
+				filter = "Fantasy";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 4) {
+				filter = "Romance";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 5) {
+				filter = "Science";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 6) {
+				filter = "Poetry";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 7) {
+				filter = "Self-Help";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 8) {
+				filter = "CookBook";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 9) {
+				filter = "Memoir";
+				cout << filter << endl;
+				break;
+			}
+			else if (choice == 10) {
+				filter = "History";
+				cout << filter << endl;
+				break;
+			}
+			else {
+				cout << "Invalid selection.\n" << endl;
+			}
+		} while (choice != 10);
+
+		//here got problem
+		if (current->BookType != filter) {
+				cout << "No book in " << filter << " category" << endl;
+		}
+		else {
+			cout << "Filtered Book List" << endl;
+			cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
+			while (current != NULL) {
+				if (current->BookType == filter) {
+					cout << current->BookID << " \t\t " << current->BookName << " \t\t " << current->BookType << " \t\t " << current->UnitPrice << " \t\t " << current->Quantity << " \t " << endl;
+				}
+					current = current->next;
+			}
+		//}
 	}
 }
 
@@ -804,7 +1040,8 @@ void inventoryMenu() {
 		cout << "4 View Inventory" << endl;
 		cout << "5 Search Inventory" << endl;
 		cout << "6 Sort Inventory" << endl;
-		cout << "7 Exit Inventory Management\n" << endl;
+		cout << "7 Filter Inventory Category" << endl;
+		cout << "8 Exit Inventory Management\n" << endl;
 		cout << "-----------------------------------" << endl;
 		cin >> choice;
 
@@ -828,12 +1065,16 @@ void inventoryMenu() {
 		case 6:
 			sortInventory();
 			break;
-		case 7:
+		case 7: 
+			filterCategory();
+			break;
+		case 8:
 			return;
+			system("CLS");
 			break;
 		default:
 			cout << "Invalid selection! Please select again " << endl;
 		}
-	} while (choice != 7);
+	} while (choice != 8);
 	system("CLS");
 }
