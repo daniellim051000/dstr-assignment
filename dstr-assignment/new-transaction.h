@@ -26,14 +26,16 @@ struct Transaction {
 		InventoryInfo* getAddedBooks();
 		void setAddedBooks(int id, std::string name, std::string booktype, double unitPrice, int quantity);
 		void addToCart(Transaction** head);
+		double calculateTotal(Transaction** head);
 		void showTransactionRecord();
 };
 
 Transaction* headTransaction = NULL;
 Transaction* transaction1 = new Transaction;
 InventoryInfo* seeInventory = new InventoryInfo;
+int newTransID = 1001;
 
-void newTransaction();
+void showNewTransMenu();
 
 int Transaction::getNewID() {
 	return this->transactionID;
@@ -65,27 +67,40 @@ void Transaction::newTransaction() {
 
 	viewCart(&newCart);
 	int choice = 0;
-	int newTransID = 1001;
-	
 	//set new id for transaction
 	newCart->setNewID(newTransID);
 	newTransID++;
 	
 	do {
-		cout << "please select an action.\n1. Add books to cart\n2. Remove Books from cart\n3. View Cart\n4. Checkout Cart\n5.Cancel Transaction\n";
+		cout << "please select an action.\n1. Add books to cart\n2. View Cart\n3. Checkout Cart\n4.Cancel Transaction\n";
 		cin >> choice;
 
 		switch (choice) {
 		case 1:
 			addToCart(&newCart);
+			system("CLS");
+			break;
+		case 2:
+			viewCart(&newCart);
 			break;
 		case 3:
-			viewCart(&newCart);
+			if (newCart->getAddedBooks() == NULL) {
+				cout << "there is nothing in the cart. Please have some books before checkout" << endl;
+			}
+			else {
+				cout << "perform checkout" << endl;
+				newCart->setTotalPrice(calculateTotal(&newCart));
+				seeInventory->updateInventoryStatus(newCart->getAddedBooks());
+				newCart->next = headTransaction;
+				headTransaction = newCart;
+				cout << "checkout successful" << endl;
+				return;
+			}
 			break;
 		default:
 			cout << "Invalid selection.\n" << endl;
 		}
-	} while (choice != 5);
+	} while (choice != 4);
 }
 
 void Transaction::addToCart(Transaction** head) {
@@ -249,6 +264,19 @@ Transaction* Transaction::searchTransaction(int id, Transaction* head) {
 	return current;
 }
 
+double Transaction::calculateTotal(Transaction** head) {
+	InventoryInfo* current = (*head)->getAddedBooks();
+	float total = 0;
+	if (current == NULL) {
+		return total;
+	}
+	while (current != NULL) {
+		total = current->getUnitPrice() * current->getQuantity();
+		current = current->next;
+	}
+	return total;
+}
+
 void showNewTransMenu() {
 	int choice;
 	system("CLS");
@@ -264,6 +292,7 @@ void showNewTransMenu() {
 		switch (choice) {
 		case 1:
 			transaction1->newTransaction();
+			system("CLS");
 			break;
 		case 2:
 			transaction1->showTransactionRecord();

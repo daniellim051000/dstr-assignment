@@ -28,6 +28,7 @@ struct InventoryInfo {
 	void setUnitPrice(double UnitPrice);
 	int getQuantity();
 	void setQuantity(int Quantity);
+	void updateInventoryStatus(InventoryInfo* status);
 };
 struct InventoryInfo* headInventory = NULL;
 int bookID = 2;
@@ -767,6 +768,24 @@ void InventoryInfo::push(InventoryInfo** head_ref, int id, string name, string c
 	as1->next = *head_ref;
 	*head_ref = as1;
 	//free(new_node);
+}
+
+void InventoryInfo::updateInventoryStatus(InventoryInfo* status) {
+	InventoryInfo* current = headInventory;
+	if (current == NULL) {
+		return;
+	}
+	else if (status == NULL) {
+		return;
+	}
+	while (current != NULL) {
+		if (status->getInventoryID() == current->getInventoryID()) {
+			current->setQuantity(current->getQuantity() - status->getQuantity());
+			break;
+		}
+		current = current->next;
+	}
+	status = status->next;
 }
 
 //show inventory menu
