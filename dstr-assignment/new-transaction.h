@@ -1,6 +1,9 @@
 #pragma once
-#include "Inventory.h"
+#include <iostream>
 #include <string>
+#include <cstdlib>
+#include <iomanip>
+#include "Inventory.h"
 using namespace std;
 
 struct Transaction {
@@ -23,21 +26,16 @@ struct Transaction {
 		InventoryInfo* getAddedBooks();
 		void setAddedBooks(int id, std::string name, std::string booktype, double unitPrice, int quantity);
 		void addToCart(Transaction** head);
+		double calculateTotal(Transaction** head);
 		void showTransactionRecord();
 };
 
 Transaction* headTransaction = NULL;
 Transaction* transaction1 = new Transaction;
 InventoryInfo* seeInventory = new InventoryInfo;
+int newTransID = 1001;
 
-InventoryInfo* Transaction::getAddedBooks() {
-	return this->bookDetails;
-}
-
-void Transaction::setAddedBooks(int id, string name, string booktype, double unitPrice, int quantity) {
-	InventoryInfo* current = new InventoryInfo;
-	current->push(&this->bookDetails, id, name, booktype, unitPrice, quantity);
-}
+void showNewTransMenu();
 
 int Transaction::getNewID() {
 	return this->transactionID;
@@ -55,37 +53,54 @@ void Transaction::setTotalPrice(double totalPrice) {
 	this->totatPrice = totalPrice;
 }
 
+InventoryInfo* Transaction::getAddedBooks() {
+	return this->bookDetails;
+}
+
+void Transaction::setAddedBooks(int id, string name, string booktype, double unitPrice, int quantity) {
+	InventoryInfo* current = new InventoryInfo;
+	current->push(&this->bookDetails, id, name, booktype, unitPrice, quantity);
+}
+
 void Transaction::newTransaction() {
 	Transaction* newCart = new Transaction;
 
 	viewCart(&newCart);
-	int choice;
-	int newTransID = 1;
-	
+	int choice = 0;
 	//set new id for transaction
 	newCart->setNewID(newTransID);
 	newTransID++;
-
-	cout << "please select an action.\n1. Add books to cart\n2. Remove Books from cart\n3. View Cart\n4. Checkout Cart\n5.Cancel Transaction\n";
-	cin >> choice;
+	
 	do {
+		cout << "please select an action.\n1. Add books to cart\n2. View Cart\n3. Checkout Cart\n4.Cancel Transaction\n";
+		cin >> choice;
+
 		switch (choice) {
 		case 1:
 			addToCart(&newCart);
+			system("CLS");
 			break;
 		case 2:
-			
-			break;
-		case 3:
 			viewCart(&newCart);
 			break;
-		case4:
-
+		case 3:
+			if (newCart->getAddedBooks() == NULL) {
+				cout << "there is nothing in the cart. Please have some books before checkout" << endl;
+			}
+			else {
+				cout << "perform checkout" << endl;
+				newCart->setTotalPrice(calculateTotal(&newCart));
+				seeInventory->updateInventoryStatus(newCart->getAddedBooks());
+				newCart->next = headTransaction;
+				headTransaction = newCart;
+				cout << "checkout successful" << endl;
+				return;
+			}
 			break;
 		default:
 			cout << "Invalid selection.\n" << endl;
 		}
-	} while (choice != 5);
+	} while (choice != 4);
 }
 
 void Transaction::addToCart(Transaction** head) {
@@ -104,7 +119,7 @@ void Transaction::addToCart(Transaction** head) {
 			cout << "To exit. please enter 0 to exit" << endl;
 			cin >> choice;
 			if (choice == 0) {
-				return;
+				break;
 			}
 			temp = itemInStock->search(choice, NULL);
 			if (temp == NULL) {
@@ -113,7 +128,7 @@ void Transaction::addToCart(Transaction** head) {
 			}
 			counter++;
 		}
-		if (counter == 1) {
+		else if (counter == 1) {
 			cout << temp->showInventory(2);
 			cout << "please enter a quantity of book u wish to buy." << endl;
 			cout << "Enter 0 to exit" << endl;
@@ -124,7 +139,7 @@ void Transaction::addToCart(Transaction** head) {
 					cin.ignore();
 				}
 				cout << "Invalid input" << endl;
-				cout << "Please enter the quantity which is less then stock" << endl;
+				cout << "Please key in the postive number for quantity" << endl;
 				cin >> quantity;
 			}
 			if (quantity == 0)break;
@@ -134,7 +149,7 @@ void Transaction::addToCart(Transaction** head) {
 			}
 			//if the cart is empty, then allow add
 			if (cart == NULL) {
-				(*head)->setAddedBooks(temp->getInventoryID(), temp->getBookName(), temp->getBookType(), temp->getUnitPrice(), temp->getQuantity());
+				(*head)->setAddedBooks(temp->getInventoryID(), temp->getBookName(), temp->getBookType(), temp->getUnitPrice(), quantity);
 				return;
 			}
 			//search for the choosen book in the transaction cart
@@ -142,13 +157,12 @@ void Transaction::addToCart(Transaction** head) {
 			//if the book is not found in the cart
 			if (itemInCart == NULL) {
 				cout << "there is nothing in cart" << endl;
-				(*head)->setAddedBooks(temp->getInventoryID(), temp->getBookName(), temp->getBookType(), temp->getUnitPrice(), temp->getQuantity());
+				(*head)->setAddedBooks(temp->getInventoryID(), temp->getBookName(), temp->getBookType(), temp->getUnitPrice(), quantity);
 				return;
 			}
 			else {
-				cout << "Counter is running" << endl;
-				cout << to_string(itemInCart->getQuantity()) << endl;
 				if (temp->getQuantity() < itemInCart->getQuantity() + quantity) {
+					//here got problem
 					cout << "quantity more than stock available. please re-enter a smaller number" << endl;
 					continue;
 				}
@@ -163,8 +177,6 @@ void Transaction::addToCart(Transaction** head) {
 				}
 				counter++;
 			}
-			return;
-			return;
 		}
 	} while (counter < 2);
 }
@@ -210,7 +222,7 @@ void Transaction::showTransactionRecord() {
 				cout << "Please key in the transaction ID again" << endl;
 				cin >> choice;
 			}
-			if (choice == 0) { return; }
+			if (choice == 0) { break; }
 			choiceTrans = choiceTrans->searchTransaction(choice, headTransaction);
 			if (choiceTrans == NULL) {
 				cout << "Transaction not found! Please enter another ID" << endl;
@@ -252,6 +264,19 @@ Transaction* Transaction::searchTransaction(int id, Transaction* head) {
 	return current;
 }
 
+double Transaction::calculateTotal(Transaction** head) {
+	InventoryInfo* current = (*head)->getAddedBooks();
+	float total = 0;
+	if (current == NULL) {
+		return total;
+	}
+	while (current != NULL) {
+		total = current->getUnitPrice() * current->getQuantity();
+		current = current->next;
+	}
+	return total;
+}
+
 void showNewTransMenu() {
 	int choice;
 	system("CLS");
@@ -261,18 +286,16 @@ void showNewTransMenu() {
 		cout << "1 Create Transaction" << endl;
 		cout << "2 View Transaction Details" << endl;
 		cout << "3 Sort Transaction" << endl;
-		cout << "5 Exit Order Management\n" << endl;
+		cout << "4 Exit Order Management\n" << endl;
 		cin >> choice;
 
 		switch (choice) {
 		case 1:
 			transaction1->newTransaction();
+			system("CLS");
 			break;
 		case 2:
-			
-			break;
-		case 3:
-			editOrder();
+			transaction1->showTransactionRecord();
 			break;
 		default:
 			cout << "Invalid selection. Please pick again.\n" << endl;
