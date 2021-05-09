@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <iomanip>
 #include "Inventory.h"
-#include <string>
 using namespace std;
 
 struct Transaction {
@@ -63,16 +64,17 @@ void Transaction::newTransaction() {
 	Transaction* newCart = new Transaction;
 
 	viewCart(&newCart);
-	int choice;
+	int choice = 0;
 	int newTransID = 1001;
 	
 	//set new id for transaction
 	newCart->setNewID(newTransID);
 	newTransID++;
-
-	cout << "please select an action.\n1. Add books to cart\n2. Remove Books from cart\n3. View Cart\n4. Checkout Cart\n5.Cancel Transaction\n";
-	cin >> choice;
+	
 	do {
+		cout << "please select an action.\n1. Add books to cart\n2. Remove Books from cart\n3. View Cart\n4. Checkout Cart\n5.Cancel Transaction\n";
+		cin >> choice;
+
 		switch (choice) {
 		case 1:
 			addToCart(&newCart);
@@ -99,9 +101,9 @@ void Transaction::addToCart(Transaction** head) {
 		if (counter == 0) {
 			cout << "please enter the book id wanted to add into cart" << endl;
 			itemInStock->displayInventory(NULL);
-			cout << "To exit. please enter 1 to exit" << endl;
+			cout << "To exit. please enter 0 to exit" << endl;
 			cin >> choice;
-			if (choice == 1) {
+			if (choice == 0) {
 				break;
 			}
 			temp = itemInStock->search(choice, NULL);
@@ -111,7 +113,7 @@ void Transaction::addToCart(Transaction** head) {
 			}
 			counter++;
 		}
-		if (counter == 1) {
+		else if (counter == 1) {
 			cout << temp->showInventory(2);
 			cout << "please enter a quantity of book u wish to buy." << endl;
 			cout << "Enter 0 to exit" << endl;
@@ -205,7 +207,7 @@ void Transaction::showTransactionRecord() {
 				cout << "Please key in the transaction ID again" << endl;
 				cin >> choice;
 			}
-			if (choice == 0) { return; }
+			if (choice == 0) { break; }
 			choiceTrans = choiceTrans->searchTransaction(choice, headTransaction);
 			if (choiceTrans == NULL) {
 				cout << "Transaction not found! Please enter another ID" << endl;
