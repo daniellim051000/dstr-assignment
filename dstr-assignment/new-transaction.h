@@ -204,9 +204,9 @@ void Transaction::showTransactionRecord() {
 	} 
 	do {
 		if (counter == 0) {
-			cout << "Transaction ID   Total Price (RM)" << endl;
+			cout << "Transaction ID \t Total Price (RM)" << endl;
 			while (current != NULL) {
-				cout << current->getNewID() << " " << ceil(current->getTotalPrice() * 100.0) / 100.0 << endl;
+				cout << current->getNewID() << "\t\t " << ceil(current->getTotalPrice() * 100.0) / 100.0 << endl;
 				InventoryInfo* purchase = current->getAddedBooks();
 				current = current->next;
 			}
@@ -281,12 +281,12 @@ void showNewTransMenu() {
 	int choice;
 	system("CLS");
 	do {
-		cout << "New Transactio Management" << endl;
+		cout << "New Transaction Management" << endl;
 		cout << "To perform an action, enter" << endl;
 		cout << "1 Create Transaction" << endl;
 		cout << "2 View Transaction Details" << endl;
 		cout << "3 Sort Transaction" << endl;
-		cout << "4 Exit Order Management\n" << endl;
+		cout << "4 Exit Transaction Management\n" << endl;
 		cin >> choice;
 
 		switch (choice) {
