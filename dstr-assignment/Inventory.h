@@ -31,7 +31,7 @@ struct InventoryInfo {
 	void updateInventoryStatus(InventoryInfo* status);
 };
 struct InventoryInfo* headInventory = NULL;
-int bookID = 2;
+int bookID = 1;
 void inventoryMenu();
 
 int InventoryInfo::getInventoryID() {
@@ -82,11 +82,11 @@ string InventoryInfo::showInventory(int method) {
 		}
 			  break;
 		case 2: {
-			return "Book ID   : " + to_string(getInventoryID()) + "\n" + "Book Name : " + getBookName() + "\n" + "Category  : " + getBookType() + "\n" + "Unit Price  : " + to_string(getUnitPrice()) + "\n" + "Quantity     :RM " + to_string(getQuantity()) + "\n";
+			return "Book ID    : " + to_string(getInventoryID()) + "\n" + "Book Name  : " + getBookName() + "\n" + "Category   : " + getBookType() + "\n" + "Unit Price :RM " + to_string(getUnitPrice()) + "\n" + "Quantity   : " + to_string(getQuantity()) + "\n";
 		}
 			  break;
 		default:
-			return "Book ID   : " + to_string(getInventoryID()) + "\n" + "Book Name : " + getBookName() + "\n" + "Category  : " + getBookType() + "\n" + "Unit Price  : " + to_string(getUnitPrice()) + "\n" + "Quantity     :RM " + to_string(getQuantity()) + "\n";
+			return "Book ID    : " + to_string(getInventoryID()) + "\n" + "Book Name  : " + getBookName() + "\n" + "Category   : " + getBookType() + "\n" + "Unit Price :RM " + to_string(getUnitPrice()) + "\n" + "Quantity   : " + to_string(getQuantity()) + "\n";
 	}
 }
 
