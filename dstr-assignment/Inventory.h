@@ -348,7 +348,7 @@ void editInventory() {
 
 void deleteInventory() {
 	int deleteID;
-	int choice;
+	string choice;
 	cout << "Enter Book ID to delete record >> " << endl;
 	cin >> deleteID;
 	while (!(cin.good())) { // validation for int
@@ -363,55 +363,79 @@ void deleteInventory() {
 	InventoryInfo* previous = NULL;
 	InventoryInfo* tempnext = NULL;
 
-	while (current->BookID != deleteID && current != NULL) {
-		previous = current;
-		current = current->next;
-		/*if (current->Quantity != 0) {
-			cout << "Book Quantity is not ZERO! Cannot be deleted " << endl;
-			cout << "Please enter the Book ID>> ";
-			cin >> deleteID;
-		}*/
-	}
-
 	if (current == NULL) {
 		cout << "No inventory record!" << endl;
 	}
-	else if (previous == NULL) { // delete at the beginning
-		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
-		cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
-		cout << "Delete all elements of the record [Y/N]: " << endl;
-
-		char choice;
-		cin >> choice;
-
-		if (choice == 'Y' || choice == 'y') {
-			tempnext = current->next;
-			headInventory = tempnext;
-			delete current;
-			cout << "Deleting..." << endl;
-			cout << "Book record has been deleted " << endl;
+	else {
+		while (current->BookID != deleteID && current != NULL) {
+			previous = current;
+			current = current->next;
 		}
-		else {
-			cout << "Book record is not delete " << endl;
-		}
-	}
-	else { // delete at the end
-		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
-		cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
-		cout << "Delete all elements of the record [Y/N]2:" << endl;
+		if (previous == NULL) { // delete at the beginning
+			if (current->Quantity != 0) { // not equal 0
+				cout << "Book Quantity is not ZERO! Cannot be deleted " << endl;
+				cout << "To exit. please enter 'exit' to exit" << endl;
+				cout << "To enter the new book ID. please enter 'new' to exit" << endl;
+				cin >> choice;
+				if (choice == "exit") {
+					return;
+				}
+				else {
+					return deleteInventory();
+				}
+			}
+			else {
+				cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
+				cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
+				cout << "Delete all elements of the record [Y/N]: " << endl;
 
-		char choice;
-		cin >> choice;
+				char choice;
+				cin >> choice;
 
-		if (choice == 'Y' || choice == 'y') {
-			tempnext = current->next;
-			previous->next = tempnext;
-			delete current;
-			cout << "Deleting..." << endl;
-			cout << "Book record has been deleted " << endl;
+				if (choice == 'Y' || choice == 'y') {
+					tempnext = current->next;
+					headInventory = tempnext;
+					delete current;
+					cout << "Deleting..." << endl;
+					cout << "Book record has been deleted " << endl;
+				}
+				else {
+					cout << "Book record is not delete " << endl;
+				}
+			}
 		}
-		else {
-			cout << "Book record is not delete " << endl;
+		else { // delete at the end
+			if (current->Quantity != 0) { // not equal 0
+				cout << "Book Quantity is not ZERO! Cannot be deleted " << endl;
+				cout << "To exit. please enter 'exit' to exit" << endl;
+				cout << "To enter the new book ID. please enter 'new' to exit" << endl;
+				cin >> choice;
+				if (choice == "exit") {
+					return;
+				}
+				else {
+					return deleteInventory();
+				}
+			}
+			else {
+				cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
+				cout << current->BookID << " \t\t " << current->BookName << "\t\t" << current->BookType << "\t\t" << current->UnitPrice << "\t\t" << current->Quantity << " \t " << endl;
+				cout << "Delete all elements of the record [Y/N]2:" << endl;
+
+				char choice;
+				cin >> choice;
+
+				if (choice == 'Y' || choice == 'y') {
+					tempnext = current->next;
+					previous->next = tempnext;
+					delete current;
+					cout << "Deleting..." << endl;
+					cout << "Book record has been deleted " << endl;
+				}
+				else {
+					cout << "Book record is not delete " << endl;
+				}
+			}
 		}
 	}
 }
@@ -806,7 +830,7 @@ void sortQuantity_descending() {
 
 		for (int i = 0; i < counter; i++) { // 1st loop
 			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
-				if (sort->Quantity < sort->next->Quantity) {
+				if (sort->Quantity != sort->next->Quantity) {
 					tempBookId = sort->BookID;
 					sort->BookID = sort->next->BookID;
 					sort->next->BookID = tempBookId;
@@ -896,9 +920,16 @@ void sortInventory() {
 void filterCategory() {
 	struct InventoryInfo* current;
 	current = headInventory;
+	//string option[10] = {"Classics", "Mystery", "Fantasy", "Romance", "Science", "Poetry", "Self-Help", "CookBook", "Memoir", "History"};
 	string filter;
-	int counter = 0;
 	int choice;
+	int tempBookId;
+	string tempBookName;
+	string tempBookType;
+	double tempUnitPrice;
+	int tempQuantity;
+	int counter = 0;
+
 	if (current == NULL) {
 		cout << "No inventory record" << endl;
 	}
@@ -972,22 +1003,19 @@ void filterCategory() {
 			else {
 				cout << "Invalid selection.\n" << endl;
 			}
+
 		} while (choice != 10);
 
-		//here got problem
-		if (current->BookType != filter) {
-			cout << "No book in " << filter << " category" << endl;
-		}
-		else {
-			cout << "Filtered Book List" << endl;
-			cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
-			while (current != NULL) {
-				if (current->BookType == filter) {
-					cout << current->BookID << " \t\t " << current->BookName << " \t\t " << current->BookType << " \t\t " << current->UnitPrice << " \t\t " << current->Quantity << " \t " << endl;
-				}
-				current = current->next;
+		cout << "Filtered Book List" << endl;
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
+		while (current != NULL) {
+			if (current->BookType == filter) {
+				cout << current->BookID << " \t\t " << current->BookName << " \t\t " << current->BookType << " \t\t " << current->UnitPrice << " \t\t " << current->Quantity << " \t " << endl;
 			}
+			current = current->next;
 		}
+		// here got problem
+		cout << "No book in " << filter << " category" << endl;
 	}
 }
 
