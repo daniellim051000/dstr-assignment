@@ -943,7 +943,7 @@ void filterCategory() {
 			cout << "9 Memoir" << endl;
 			cout << "10 History" << endl;
 			cout << "-----------------------------------" << endl;
-			cout << "11 to exit" << endl;
+			cout << "11 to exit\n" << endl;
 			cin >> choice;
 
 			if (choice == 1) {
@@ -996,11 +996,13 @@ void filterCategory() {
 				cout << filter << endl;
 				break;
 			}
+			else if (choice == 11) {
+				return;
+			}
 			else {
 				cout << "Invalid selection.\n" << endl;
 			}
-
-		} while (choice != 10);
+		} while (choice != 11);
 	}
 		
 		cout << "Filtered Book List" << endl;
