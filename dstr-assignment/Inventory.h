@@ -1019,6 +1019,100 @@ void filterCategory() {
 	}
 }
 
+void newFilterCategory() {
+	struct InventoryInfo* current;
+	current = headInventory;
+	//string option[10] = {"Classics", "Mystery", "Fantasy", "Romance", "Science", "Poetry", "Self-Help", "CookBook", "Memoir", "History"};
+	string filter;
+	int choice;
+	int tempBookId;
+	string tempBookName;
+	string tempBookType;
+	double tempUnitPrice;
+	int tempQuantity;
+	int counter = 0;
+
+	if (current == NULL) {
+		cout << "there is no inventory" << endl;
+	}
+	do {
+		cout << "Please choose the book category to filter >>" << endl;
+		cout << "---------Fiction------------" << endl;
+		cout << "1 Classics" << endl;
+		cout << "2 Mystery" << endl;
+		cout << "3 Fantasy" << endl;
+		cout << "4 Romance" << endl;
+		cout << "5 Science" << endl;
+		cout << "---------Non-Fiction---------" << endl;
+		cout << "6 Poetry" << endl;
+		cout << "7 Self-Help" << endl;
+		cout << "8 CookBook" << endl;
+		cout << "9 Memoir" << endl;
+		cout << "10 History" << endl;
+		cout << "-----------------------------------" << endl;
+		cout << "11 to exit" << endl;
+		cin >> choice;
+
+		if (choice == 1) {
+			filter = "Classics";
+			cout << filter << endl;
+		}
+		else if (choice == 2) {
+			filter = "Mystery";
+			cout << filter << endl;
+		}
+		else if (choice == 3) {
+			filter = "Fantasy";
+			cout << filter << endl;
+		}
+		else if (choice == 4) {
+			filter = "Romance";
+			cout << filter << endl;
+		}
+		else if (choice == 5) {
+			filter = "Science";
+			cout << filter << endl;
+		}
+		else if (choice == 6) {
+			filter = "Poetry";
+			cout << filter << endl;
+		}
+		else if (choice == 7) {
+			filter = "Self-Help";
+			cout << filter << endl;
+		}
+		else if (choice == 8) {
+			filter = "CookBook";
+			cout << filter << endl;
+		}
+		else if (choice == 9) {
+			filter = "Memoir";
+			cout << filter << endl;
+		}
+		else if (choice == 10) {
+			filter = "History";
+			cout << filter << endl;
+		}
+		else {
+			cout << "Invalid selection.\n" << endl;
+		}
+
+		struct InventoryInfo* view;
+		view = headInventory;
+		if (view == NULL) {
+			cout << "there is nothing here" << endl;
+		}
+		cout << "Book ID \tBook Name \t\tBook Type \t\tUnit Price \tQuantity\t" << endl;
+		while (view != NULL) {
+			if (view->BookType == filter) {
+				cout << view->BookID << " " << view->BookName << " " << view->BookType << " " << view->UnitPrice << " " << view->Quantity << endl;
+			}
+			view = view->next;
+		}
+
+	} while (choice != 11);
+}
+
 // push value
 void InventoryInfo::push(InventoryInfo** head_ref, int id, string name, string category, double price, int qty) {
 	bool duplicate = false;
@@ -1094,7 +1188,7 @@ void inventoryMenu() {
 			sortInventory();
 			break;
 		case 7:
-			filterCategory();
+			newFilterCategory();
 			break;
 		case 8:
 			return;
