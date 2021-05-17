@@ -102,8 +102,9 @@ void addInventory() {
 
 	//book name
 	cout << "Please enter the Book Name >>";
-	cin >> add_inventory->BookName;
-	//getline(cin, add_inventory->BookName);
+	cin.ignore();
+	getline(cin, add_inventory->BookName);
+	
 
 	//book type
 	int choice = 0;
@@ -236,7 +237,8 @@ void editInventory() {
 			switch (selection) {
 			case 1: // edit book name
 				cout << "Enter the new Book Name >>";
-				cin >> current->BookName;
+				cin.ignore();
+				getline(cin, current->BookName);
 				break;
 			case 2:// edit book type
 				do {
@@ -346,6 +348,7 @@ void editInventory() {
 	cout << "No Book is found" << endl;
 }
 
+//delete inventory
 void deleteInventory() {
 	int deleteID;
 	string choice;
