@@ -192,7 +192,7 @@ void addInventory() {
 	//quantity 
 	cout << "Please enter the quantity for the book >>";
 	cin >> add_inventory->Quantity;
-	while (!cin.good() || add_inventory->Quantity < 0) { // validation for int and min quantity of 1
+	while (!cin.good() || add_inventory->Quantity < 1) { // validation for int and min quantity of 1
 		cout << "Please enter the valid quantity with at least 1" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
