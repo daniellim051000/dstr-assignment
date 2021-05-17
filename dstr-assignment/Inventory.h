@@ -324,7 +324,7 @@ void editInventory() {
 			case 4: // edit book quantity
 				cout << "Enter the new quantity >>";
 				cin >> current->Quantity;
-				while (!cin.good() || current->Quantity < 0) { // validation for int and min quantity of 1
+				while (!cin.good() || current->Quantity < 1) { // validation for int and min quantity of 1
 					cout << "Please enter the valid quantity with at least 1" << endl;
 					cin.clear();
 					cin.ignore(numeric_limits<streamsize>::max(), '\n');
