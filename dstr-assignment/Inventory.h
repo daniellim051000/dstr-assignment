@@ -237,7 +237,8 @@ void editInventory() {
 			switch (selection) {
 			case 1: // edit book name
 				cout << "Enter the new Book Name >>";
-				cin >> current->BookName;
+				cin.ignore();
+				getline(cin, current->BookName);
 				break;
 			case 2:// edit book type
 				do {
