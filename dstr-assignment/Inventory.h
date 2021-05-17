@@ -833,7 +833,7 @@ void sortQuantity_descending() {
 
 		for (int i = 0; i < counter; i++) { // 1st loop
 			while (sort != NULL && sort->next != NULL) { // 2nd loop to compare between two loops data
-				if (sort->Quantity != sort->next->Quantity) {
+				if (sort->Quantity < sort->next->Quantity) {
 					tempBookId = sort->BookID;
 					sort->BookID = sort->next->BookID;
 					sort->next->BookID = tempBookId;
