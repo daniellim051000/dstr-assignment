@@ -71,7 +71,7 @@ void Transaction::newTransaction() {
 	newTransID++;
 	
 	do {
-		cout << "please select an action.\n1. Add books to cart\n2. View Cart\n3. Checkout Cart\n4.Cancel Transaction\n";
+		cout << "please select an action.\n1. Add books to Order\n2. View Order\n3. Checkout Order\n4.Cancel Order\n";
 		cin >> choice;
 
 		switch (choice) {
@@ -84,7 +84,7 @@ void Transaction::newTransaction() {
 			break;
 		case 3:
 			if (newCart->getAddedBooks() == NULL) {
-				cout << "there is nothing in the cart. Please have some books before checkout" << endl;
+				cout << "there is nothing in the order. Please have some books before checkout" << endl;
 			}
 			else {
 				cout << "perform checkout" << endl;
